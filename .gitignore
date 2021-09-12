@@ -1,1 +1,5 @@
 venv/
+
+Outliers/__pycache__/
+Hostingapp/__pycache__/
+Hostingapp/migrations/__pycache__/
