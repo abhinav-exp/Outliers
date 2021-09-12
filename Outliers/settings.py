@@ -124,6 +124,7 @@ MEDIA_URL = '/'
 
 STATIC_URL = '/static/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'Frontend/gfg-outliers-frontend/dist_gfg/gfg-outliers-frontend')
+STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/3.2/ref/settings/#default-auto-field
