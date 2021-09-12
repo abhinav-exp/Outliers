@@ -1,1 +1,221 @@
 /* You can add global styles to this file, and also import other style files */
+*{
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+    --main-background-color:#302b63;
+    --neon-green-color: #39FF14;
+    --boundary-color:yellow;
+}
+
+body
+{
+    background: #302b63
+}
+
+.header-container
+{
+     /* border: 2px solid white; */
+     height: 12em;
+}
+.header-row
+{
+    display: flex;
+}
+
+.header-row .header-heading
+{
+     width: 100%;
+     display: flex;
+     justify-content: center;
+     align-items: center;
+     font-size: 50px;
+     color: var(--boundary-color);
+}
+
+.header-container .header-row img
+{
+    width: 10rem;
+    height: 10rem;     
+}
+
+
+.h-layer-1
+{
+    border: 10px solid var(--boundary-color);
+    padding: 10px 100px;
+}
+
+.header-column-flex
+{
+    display: flex;
+    flex-direction: column;
+}
+
+.header-column-flex-upper-layer
+{
+     height: 2.4rem;
+}
+
+.header-column-flex-lower-layer
+{
+     height: 2rem;
+}
+
+.header-column-flex-lower-layer .inner-flex
+{
+     height: 100%;
+     margin-left: 20px;
+     margin-right: 20px;
+     border-left: 10px solid var(--boundary-color);
+     border-right: 10px solid var(--boundary-color);
+}
+
+.body-container
+{
+    display: flex;
+    min-height: 600px;
+    margin-left: 2px;
+}
+
+#navbar
+{
+     width: 300px;
+     /* border: 2px solid red; */
+}
+#navbar .nav-flex
+{
+     display: flex;
+     flex-direction: column;
+     justify-content: center;
+     align-items: center;
+}
+
+#navbar .nav-flex .nav-flex-item
+{
+    width: 100%;
+    border: 2px solid var(--neon-green-color);
+    color: var(--neon-green-color);
+    text-align: center;
+    text-decoration: none;
+    padding: 15px 0px;
+    margin-bottom: 5px;
+    font-size: 25px;
+
+}
+
+#navbar .nav-flex .nav-flex-item:hover
+{
+    color: var(--main-background-color);
+    background: var(--neon-green-color);
+}
+
+#main-content
+{
+     width: 75%;
+     border: 10px solid var(--boundary-color);
+     margin-left: 4px;
+}
+
+.timetable-container
+{
+    width: 100%;
+    height: max-content;
+    background: white;
+    padding-top: 5px;
+    padding-bottom: 5px;
+    background: var(--main-background-color);
+    border-collapse: collapse;
+}
+
+.timetable-container .timetable-row
+{
+     display: flex;
+     flex-direction: column;
+     height: 100%;
+     margin: 0px 5px 0px 5px;
+     background: white;
+}
+
+.monday-row,
+.tuesday-row,
+.wednesday-row,
+.thursday-row,
+.friday-row
+{
+    border: 2px solid var(--main-background-color);
+    height: 7em;
+    display: flex;
+}
+.slot-row
+{
+    border: 2px solid var(--main-background-color);
+    height: 4em;
+    display: flex;
+}
+
+.timetable-container .timetable-row .day{
+    width: 100px;
+    border-right: 2px solid var(--main-background-color);
+    border-left: 2px solid var(--main-background-color);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-weight: bold;
+}
+.timetable-container .timetable-row .slot{
+    width: 150px;
+    border-right: 2px solid var(--main-background-color);
+    border-left: 2px solid var(--main-background-color);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    font-weight: bold;
+    height: 100%;
+}
+
+.timetable-container .timetable-row .monday-row .slot:hover,
+.timetable-container .timetable-row .tuesday-row .slot:hover,
+.timetable-container .timetable-row .wednesday-row .slot:hover,
+.timetable-container .timetable-row .thursday-row .slot:hover,
+.timetable-container .timetable-row .friday-row .slot:hover
+{
+    color: white;
+    background: var(--main-background-color);
+    cursor: pointer;
+}
+
+.timetable-container .timetable-row .double-slot{
+    width: 300px;
+    border-right: 2px solid var(--main-background-color);
+    border-left: 2px solid var(--main-background-color);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    font-weight: bold;
+}
+.timetable-container .timetable-row .slot .subject-label,
+.timetable-container .timetable-row .double-slot .subject-label{
+    font-size: 25px;
+}
+.timetable-container .timetable-row .slot-break{
+    width: 100px;
+    border-right: 2px solid var(--main-background-color);
+    border-left: 2px solid var(--main-background-color);
+}
+
+
+
+footer
+{
+    height: 3em;
+    background: antiquewhite;
+    margin: 13px 0px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-weight: bold;
+}
+
