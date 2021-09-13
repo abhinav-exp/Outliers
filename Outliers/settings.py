@@ -25,7 +25,7 @@ SECRET_KEY = 'django-insecure-8^a53%2gac-+_+@kj@51zpod24k-yg6u8+dv*o3pq9uo#0!%d)
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['*']
 
 
 # Application definition
@@ -37,6 +37,10 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'rest_framework',
+    'corsheaders',
+    'Hostingapp',
+    'API',
 ]
 
 MIDDLEWARE = [
@@ -47,7 +51,10 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'corsheaders.middleware.CorsMiddleware',
 ]
+
+CORS_ORIGIN_ALLOW_ALL = True
 
 ROOT_URLCONF = 'Outliers.urls'
 
@@ -117,7 +124,13 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/3.2/howto/static-files/
 
+import os
+
+MEDIA_URL = '/'
+
 STATIC_URL = '/static/'
+MEDIA_ROOT = os.path.join(BASE_DIR, 'Frontend/gfg-outliers-frontend/dist_gfg/gfg-outliers-frontend')
+STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/3.2/ref/settings/#default-auto-field
