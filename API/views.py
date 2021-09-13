@@ -30,6 +30,7 @@ def liststudents(request):
         obj = {
             'first' : s.firstnm, 
             'last' : s.lastnm ,
+            'email' : s.email,
             'roll' : s.roll ,
             'branch' : s.branch ,
             'cgpa' : s.cgpa ,

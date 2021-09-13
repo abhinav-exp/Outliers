@@ -4,6 +4,7 @@ from django.db import models
 class students(models.Model):
     firstnm = models.CharField(max_length=20)
     lastnm = models.CharField(max_length=20)
+    email = models.EmailField(null= True)
     roll = models.CharField(max_length=10)
     branch = models.CharField(max_length=40)
     cgpa = models.FloatField()
