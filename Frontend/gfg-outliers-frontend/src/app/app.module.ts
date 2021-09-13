@@ -7,6 +7,10 @@ import { HeaderComponent } from './components/header/header.component';
 import { NavbarComponent } from './components/navbar/navbar.component';
 import { MainContentComponent } from './components/main-content/main-content.component';
 import { TimetableComponent } from './components/content-page/timetable/timetable.component';
+import { StudentListComponent } from './components/content-page/student-list/student-list.component';
+import { NoticeBoardComponent } from './components/content-page/notice-board/notice-board.component';
+import { ContentService } from './content-service.service';
+import { HttpClientModule } from '@angular/common/http';
 
 @NgModule({
   declarations: [
@@ -14,13 +18,17 @@ import { TimetableComponent } from './components/content-page/timetable/timetabl
     HeaderComponent,
     NavbarComponent,
     MainContentComponent,
-    TimetableComponent
+    TimetableComponent,
+    StudentListComponent,
+    NoticeBoardComponent
   ],
   imports: [
     BrowserModule,
-    AppRoutingModule
+    AppRoutingModule,
+    BrowserModule,
+    HttpClientModule,
   ],
-  providers: [],
+  providers: [ContentService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

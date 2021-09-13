@@ -50,6 +50,7 @@ body
 {
     display: flex;
     flex-direction: column;
+    margin-left: 60px;
 }
 
 .header-column-flex-upper-layer

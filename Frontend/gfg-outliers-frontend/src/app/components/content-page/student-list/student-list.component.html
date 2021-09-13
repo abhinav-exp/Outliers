@@ -1,0 +1,39 @@
+<div *ngIf="isParticularProfilePicked">
+    <input type="button" id="back-button" (click)="backClicked($event)" value="Back" />
+    <ul class="tileswrap-single">
+        <li>
+            <div class="row">
+                <div class="col-sm-5 profile-details">
+                    <div *ngFor="let student of studentPicked">
+                        <img src="assets/img/empty-profile-image.png" alt="profile">
+                        <h3>{{student.first}} {{student.last}}</h3>
+                        <p>{{student.roll}}</p>
+                        <p>{{student.email}}</p>
+                        <!-- <p>CGPA:{{student.roll}}</p> -->
+                        <p>CGPA : {{student.cgpa}}</p>
+                    </div>
+                </div>
+                <div class="col-sm-7">
+                    <label id="achievement-label">Achievements</label>
+                    <div *ngFor="let student of studentPicked">
+                        <div *ngFor="let ac of student.arch;index as i">
+                            <p class="achievement">{{i+1}}) {{ac}}</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- <button (click)="buttonClicked($event)">Back</button> -->
+        </li>
+    </ul>
+</div>
+<div *ngIf="!isParticularProfilePicked">
+    <ul class="tilesWrap">
+        <li *ngFor="let student of listOfStudents;index as i">
+            <img src="assets/img/empty-profile-image.png" alt="profile">
+            <h2>{{indexFormatUtil(i)}}</h2>
+            <h3>{{student.first}} {{student.last}}</h3>
+            <p>{{student.roll}}</p>
+            <button (click)="profileClicked($event,student)">Read more</button>
+        </li>
+    </ul>
+</div>
