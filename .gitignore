@@ -5,3 +5,9 @@ Hostingapp/__pycache__/
 Hostingapp/migrations/__pycache__/
 
 staticfiles/
+
+.DS_Store
+Hostingapp/.DS_Store
+
+API/__pycache__
+API/migrations/__pycache__
