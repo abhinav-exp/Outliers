@@ -34,6 +34,14 @@ export class ContentService
         .get<any>(url);
       }
 
+      getNoticeBoardList()
+      {
+        const url = "https://teamoutliers.herokuapp.com/api/listnotice";
+        console.log(url);
+        return this.httpClient
+        .get<any>(url);
+      }
+
       
 
 

@@ -1,1 +1,24 @@
-<p>notice-board works!</p>
+<div class="row">
+    <div class="col-sm-6 list-container">
+        <ol class="gradient-list">
+            <li *ngFor="let notice of listOfNotice" (click)="noticeClicked(notice)">
+                <p>
+                    {{notice.text}}
+                </p>
+                <strong id="date">Posted On: {{notice.date | date:"dd MMM YYYY"}}</strong>
+            </li>
+          </ol>
+        
+    </div>
+    <div class="col-sm-6 full-notice-container">
+        <div class="notice-board">
+            <div *ngFor="let noticeDetails of noticePicked">
+                <h2>Date : {{noticeDetails.date | date:"dd MMM YYYY"}}</h2>
+                <p>
+                    {{noticeDetails.text}}
+                </p>
+                <h4>Posted by : {{noticeDetails.posted_by}}</h4>
+            </div>
+        </div>
+    </div>
+</div>
