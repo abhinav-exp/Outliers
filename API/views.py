@@ -49,7 +49,8 @@ def listnotice(request):
     for n in notices:
         r = {
             'date' : str(n.Date),
-            'text' : n.Text
+            'text' : n.Text,
+            'posted_by' : n.Posted_by
         }
         res.append(r)
     print(res)

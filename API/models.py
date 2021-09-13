@@ -12,6 +12,7 @@ class students(models.Model):
 class notice(models.Model):
     Date = models.DateField()
     Text = models.CharField(max_length=500)
+    Posted_by = models.CharField(max_length=50, blank=True)
 
 class achievements(models.Model):
     student = models.ForeignKey(students, on_delete=models.CASCADE, blank=True, null=True)
