@@ -179,7 +179,8 @@ body
 .timetable-container .timetable-row .tuesday-row .slot:hover,
 .timetable-container .timetable-row .wednesday-row .slot:hover,
 .timetable-container .timetable-row .thursday-row .slot:hover,
-.timetable-container .timetable-row .friday-row .slot:hover
+.timetable-container .timetable-row .friday-row .slot:hover,
+.timetable-container .timetable-row .double-slot:hover
 {
     color: white;
     background: var(--main-background-color);
