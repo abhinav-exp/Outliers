@@ -11,7 +11,7 @@ class students(models.Model):
 
 class notice(models.Model):
     Date = models.DateField()
-    Text = models.CharField(max_length=500)
+    Text = models.CharField(max_length=1000)
     Posted_by = models.CharField(max_length=50, blank=True)
 
 class achievements(models.Model):
