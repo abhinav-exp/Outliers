@@ -1,0 +1,40 @@
+<div class="container rounded mt-5 mb-5">
+    <form [formGroup]="profileFormData">
+        <div class="row bg-white">
+            <div class="col-md-3 border-right">
+                <div class="d-flex flex-column align-items-center text-center p-3 py-5"><img  
+                    src="assets/img/abhinav.jpeg"><span class="font-weight-bold">Gullu</span><span class="text-black-50">gullu@outlook.com</span><span> </span></div>
+            </div>
+            <div class="col-md-5 border-right">
+                <div class="p-3 py-5">
+                    <div class="d-flex justify-content-between align-items-center mb-3">
+                        <h4 class="text-right">Edit Profile</h4>
+                    </div>
+                    <div class="row mt-2">
+                        <div class="col-md-6"><label class="labels">First Name</label><input formControlName="firstName" type="text" class="form-control" placeholder="first name" value=""></div>
+                        <div class="col-md-6"><label class="labels">Last Name</label><input formControlName="lastName" type="text" class="form-control" value="" placeholder="last name"></div>
+                    </div>
+                    <div class="row mt-3">
+                        <div class="col-md-12"><label class="labels">Phone Number</label><input formControlName='phoneNumber' type="text" class="form-control" placeholder="Enter Phone Number" value=""></div>
+                        <div class="col-md-12"><label class="labels">Address</label><input formControlName='address' type="text" class="form-control" placeholder="enter address" value=""></div>
+                        <!-- <div class="col-md-12"><label class="labels">Email ID</label><input type="text" class="form-control" placeholder="enter email id" value=""></div> -->
+                        <!-- <div class="col-md-12"><label class="labels">Education</label><input type="text" class="form-control" placeholder="education" value=""></div> -->
+                    </div>
+                    <div class="row mt-3">
+                        <div class="col-md-6"><label class="labels">Country</label><input formControlName='country' type="text" class="form-control" placeholder="country" value=""></div>
+                        <div class="col-md-6"><label class="labels">State/Region</label><input formControlName='city' type="text" class="form-control" value="" placeholder="state"></div>
+                    </div>
+                    <div class="mt-5 text-center"><button class="btn btn-primary profile-button" type="submit">Save Profile</button></div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="p-3 py-5">
+                    <div class="d-flex justify-content-between align-items-center experience"><span>Achievements</span></div><br>
+                    <div class="col-md-12"><label class="labels">Achievement 1</label><input type="text" class="form-control" placeholder="experience" value=""></div> <br>
+                    <div class="col-md-12"><label class="labels">Achievement 2</label><input type="text" class="form-control" placeholder="additional details" value=""></div>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>
+

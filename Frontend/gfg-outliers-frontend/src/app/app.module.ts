@@ -11,6 +11,8 @@ import { StudentListComponent } from './components/content-page/student-list/stu
 import { NoticeBoardComponent } from './components/content-page/notice-board/notice-board.component';
 import { ContentService } from './content-service.service';
 import { HttpClientModule } from '@angular/common/http';
+import { ProfileComponent } from './components/content-page/profile/profile.component';
+import { ReactiveFormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [
@@ -20,13 +22,15 @@ import { HttpClientModule } from '@angular/common/http';
     MainContentComponent,
     TimetableComponent,
     StudentListComponent,
-    NoticeBoardComponent
+    NoticeBoardComponent,
+    ProfileComponent
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     BrowserModule,
     HttpClientModule,
+    ReactiveFormsModule
   ],
   providers: [ContentService],
   bootstrap: [AppComponent]
