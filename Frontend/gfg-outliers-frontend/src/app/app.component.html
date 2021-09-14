@@ -1,19 +1,88 @@
 <div id="main-component">
-  <div class="header-container">
-    <app-header></app-header>
+  <!--Login Component-->
+  <div *ngIf="!isAuthenticated" style="display: flex;justify-content: center;align-items: center;margin-top: 2em;">
+    <!--Login Card-->
+    <div *ngIf="loginMode">
+      <div class="container">
+        <div class="screen">
+          <div class="screen__content">
+            <form class="login">
+              <div class="login__field">
+                <i class="login__icon fas fa-user"></i>
+                <input type="text" class="login__input" placeholder="Email">
+              </div>
+              <div class="login__field">
+                <i class="login__icon fas fa-lock"></i>
+                <input type="password" class="login__input" placeholder="Password">
+              </div>
+              <button (click)="authenticateForNow($event)" class="button login__submit">
+                <span class="button__text">Log In Now</span>
+                <i class="button__icon fas fa-chevron-right"></i>
+              </button>				
+              <button (click)="switchToSignUp($event)" class="button login__submit">Sign Up Instead</button>
+            </form>
+          </div>
+          <div class="screen__background">
+            <span class="screen__background__shape screen__background__shape4"></span>
+            <span class="screen__background__shape screen__background__shape3"></span>		
+            <span class="screen__background__shape screen__background__shape2"></span>
+            <span class="screen__background__shape screen__background__shape1"></span>
+          </div>		
+        </div>
+      </div>
+    </div>
+    <!--Sign UP Card-->
+    <div *ngIf="signUpMode">
+      <div class="container">
+        <div class="screen">
+          <div class="screen__content">
+            <form class="login">
+              <div class="login__field">
+                <i class="login__icon fas fa-user"></i>
+                <input type="text" class="login__input" placeholder="Email">
+              </div>
+              <div class="login__field">
+                <i class="login__icon fas fa-lock"></i>
+                <input type="password" class="login__input" placeholder="Password">
+              </div>
+              <div class="login__field">
+                <i class="login__icon fas fa-lock"></i>
+                <input type="password" class="login__input" placeholder="Confirm Password">
+              </div>
+              <button (click)="authenticateForNow($event)" class="button login__submit">
+                <span class="button__text">Sign Up Now</span>
+                <i class="button__icon fas fa-chevron-right"></i>
+              </button>				
+              <button (click)="switchToLogin($event)" class="button login__submit">Log In Instead</button>
+            </form>
+          </div>
+          <div class="screen__background">
+            <span class="screen__background__shape screen__background__shape4"></span>
+            <span class="screen__background__shape screen__background__shape3"></span>		
+            <span class="screen__background__shape screen__background__shape2"></span>
+            <span class="screen__background__shape screen__background__shape1"></span>
+          </div>		
+        </div>
+      </div>
+    </div>
   </div>
-  <div class="body-container">
-    
-    <div id="navbar">
+  <div *ngIf="isAuthenticated">
+    <div class="header-container">
+      <app-header></app-header>
+    </div>
+    <div class="body-container">
+
+      <div id="navbar">
         <app-navbar></app-navbar>
-    </div>
+      </div>
 
-    <div id="main-content">
+      <div id="main-content">
         <app-main-content></app-main-content>
-    </div>
+      </div>
 
+    </div>
+    <footer>
+      Made with &#10084; by Team Outliers
+    </footer>
   </div>
-  <footer>
-    Made with &#10084; by Team Outliers
-  </footer>
 </div>
