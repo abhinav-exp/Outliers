@@ -1,0 +1,32 @@
+<div class="row">
+    <div class="col-sm-6 list-container">
+
+        <div class="add-task-card">
+            Add Task
+        </div>
+        <div class="main-container">
+            
+            <div class="cards" *ngFor="let task of todoList;index as i" (click)="taskClicked(task)">
+              <div class="card card-{{(i%5)+1}}">
+                <div class="mark-complete">
+                    Mark As Complete
+                </div>
+                <p class="card__exit"><i class="fas fa-times"></i></p>
+                <h2 class="card__title">Lorem ipsum dolor sit amet, consectetur adipiscing elit.</h2>
+              </div>
+            </div>
+          </div>
+        
+    </div>
+    <div class="col-sm-6 full-notice-container">
+        <div class="notice-board">
+            <div *ngFor="let task of currentTask">
+                <p>
+                    {{task.task}}
+                </p>
+                <h2>Deadline : {{task.deadline | date:"dd MMM YYYY"}}</h2>
+            </div>
+        </div>
+    </div>
+</div>
+

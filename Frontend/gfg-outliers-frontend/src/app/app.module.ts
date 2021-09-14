@@ -13,6 +13,7 @@ import { ContentService } from './content-service.service';
 import { HttpClientModule } from '@angular/common/http';
 import { ProfileComponent } from './components/content-page/profile/profile.component';
 import { ReactiveFormsModule } from '@angular/forms';
+import { ToDoListComponent } from './components/content-page/to-do-list/to-do-list.component';
 
 @NgModule({
   declarations: [
@@ -23,7 +24,8 @@ import { ReactiveFormsModule } from '@angular/forms';
     TimetableComponent,
     StudentListComponent,
     NoticeBoardComponent,
-    ProfileComponent
+    ProfileComponent,
+    ToDoListComponent
   ],
   imports: [
     BrowserModule,
