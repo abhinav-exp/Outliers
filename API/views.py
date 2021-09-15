@@ -39,7 +39,7 @@ def liststudents(request):
         for arc in achievements.objects.filter(student = s):
             obj['arch'].append(arc.text)
         res.append(obj)
-    print(res)
+    #print(res)
     return Response(res)
 
 @api_view(['GET'])
@@ -53,7 +53,7 @@ def listnotice(request):
             'posted_by' : n.Posted_by
         }
         res.append(r)
-    print(res)
+    #print(res)
     return Response(res)
 
 @api_view(['POST'])
@@ -114,18 +114,27 @@ import json
 @api_view(['POST'])
 def editstudent(request):
 
-    # first = request.POST['first']
-    # last = request.POST['last']
-    # email = request.POST['email']
-    # cgpa = request.POST['cgpa']
+    first = request.data['first']
+    last = request.data['last']
+    email = request.data['email'].lower()
+    cgpa = request.data['cgpa']
 
     #arch = json.loads(request.POST)['arch']
     #arch = request.POST.getlist('arch')
     arch = request.data.get('arch')
-    print(request.POST)
-    print(arch)
-    print(type(arch))
-    print(arch[0])
-    return Response(arch)
-
+    # print(request.POST)
+    # print(arch)
+    # print(type(arch))
+    s = students.objects.get(email = email.lower())
+    achievements.objects.filter(student = s).delete()
+    s.firstnm = first
+    s.lastnm = last
+    s.cgpa = cgpa
+    s.save()
+    for a in arch:
+        ar = achievements(student = s, text = a)
+        ar.save()
+    return Response({
+        'api status' : 700
+    })
 
