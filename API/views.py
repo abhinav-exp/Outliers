@@ -32,7 +32,7 @@ def liststudents(request):
             'last' : s.lastnm ,
             'email' : s.email,
             'roll' : s.roll ,
-            'branch' : s.branch ,
+            #'branch' : s.branch ,
             'cgpa' : s.cgpa ,
             'arch' : []
         }
@@ -55,3 +55,22 @@ def listnotice(request):
         res.append(r)
     print(res)
     return Response(res)
+
+@api_view(['POST'])
+def sign_up(request):
+    Firstnm = request.POST['first']
+    Lastnm = request.POST['last']
+    email = request.POST['email']
+    passwd = request.POST['password']
+
+    if not (email[-14:] == '@iiit-bh.ac.in' and len(email) == 21):
+        return Response({'status' : 601})
+    if not email[2:4] == '19':
+        return Response({'status':602})
+    if not email[:2].lower() == 'b5':
+        return Response({'status':603})
+    if int(email[4:7]) > 100:
+        return Response({'status':604})
+    
+    if students.objects.get(email = email.lower()):
+        

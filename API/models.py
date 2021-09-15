@@ -6,7 +6,7 @@ class students(models.Model):
     lastnm = models.CharField(max_length=20)
     email = models.EmailField(null= True)
     roll = models.CharField(max_length=10)
-    branch = models.CharField(max_length=40)
+    passwd = models.CharField(max_length=40)
     cgpa = models.FloatField()
 
 class notice(models.Model):
