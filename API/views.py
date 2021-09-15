@@ -60,17 +60,72 @@ def listnotice(request):
 def sign_up(request):
     Firstnm = request.POST['first']
     Lastnm = request.POST['last']
-    email = request.POST['email']
+    email = request.POST['email'].lower()
     passwd = request.POST['password']
 
     if not (email[-14:] == '@iiit-bh.ac.in' and len(email) == 21):
-        return Response({'status' : 601})
+        return Response({'api status' : 601})
     if not email[2:4] == '19':
-        return Response({'status':602})
-    if not email[:2].lower() == 'b5':
-        return Response({'status':603})
+        return Response({'api status':602})
+    if not email[0].lower() == 'b':
+        return Response({'api status':603})
+    if not email[1].lower() == '5':
+        return Response({'api status':604})
     if int(email[4:7]) > 100:
-        return Response({'status':604})
+        return Response({'api status':605})
     
-    if students.objects.get(email = email.lower()):
-        
+    try :
+        s = students.objects.get(email = email.lower())
+        return Response({'api status':606})
+    
+    except students.DoesNotExist :
+        s = students(firstnm = Firstnm, lastnm = Lastnm, email = email.lower(),
+            roll = email[:7], passwd = passwd, cgpa = 0)
+        s.save()
+        return Response({'api status':700})
+
+def log_in(request):
+    email = request.POST['email'].lower()
+    passwd = request.POST['password']
+
+    if not (email[-14:] == '@iiit-bh.ac.in' and len(email) == 21):
+        return Response({'api status' : 601})
+    if not email[2:4] == '19':
+        return Response({'api status':602})
+    if not email[0].lower() == 'b':
+        return Response({'api status':603})
+    if not email[1].lower() == '5':
+        return Response({'api status':604})
+    if int(email[4:7]) > 100:
+        return Response({'api status':605})
+    
+    try :
+        s = students.objects.get(email = email.lower())
+        if s.passwd == passwd:
+            return Response({'api status':700})
+        else :
+            return Response({'api status':607})        
+
+    except students.DoesNotExist :
+        return Response({'api status':606})
+
+import json
+
+@api_view(['POST'])
+def editstudent(request):
+
+    # first = request.POST['first']
+    # last = request.POST['last']
+    # email = request.POST['email']
+    # cgpa = request.POST['cgpa']
+
+    #arch = json.loads(request.POST)['arch']
+    #arch = request.POST.getlist('arch')
+    arch = request.data.get('arch')
+    print(request.POST)
+    print(arch)
+    print(type(arch))
+    print(arch[0])
+    return Response(arch)
+
+
