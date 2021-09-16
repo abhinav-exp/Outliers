@@ -138,3 +138,23 @@ def editstudent(request):
         'api status' : 700
     })
 
+@api_view(['GET'])
+def get_by_roll(request):
+    roll = request.GET['roll'].lower()
+    s = students.objects.get(roll = roll)
+    obj = {
+            'first' : s.firstnm, 
+            'last' : s.lastnm ,
+            'email' : s.email,
+            'roll' : s.roll ,
+            'cgpa' : s.cgpa ,
+            'address' : s.address,
+            'city' : s.city,
+            'state' : s.state,
+            'contact' : s.contact,
+            'arch' : []
+        }
+    for arc in achievements.objects.filter(student = s):
+            obj['arch'].append(arc.text)
+    
+    return Response(obj)
