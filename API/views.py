@@ -58,10 +58,10 @@ def listnotice(request):
 
 @api_view(['POST'])
 def sign_up(request):
-    Firstnm = request.POST['first']
-    Lastnm = request.POST['last']
-    email = request.POST['email'].lower()
-    passwd = request.POST['password']
+    Firstnm = request.data['first']
+    Lastnm = request.data['last']
+    email = request.data['email'].lower()
+    passwd = request.data['password']
 
     if not (email[-14:] == '@iiit-bh.ac.in' and len(email) == 21):
         return Response({'api status' : 601})
@@ -85,8 +85,8 @@ def sign_up(request):
         return Response({'api status':700})
 
 def log_in(request):
-    email = request.POST['email'].lower()
-    passwd = request.POST['password']
+    email = request.data['email'].lower()
+    passwd = request.data['password']
 
     if not (email[-14:] == '@iiit-bh.ac.in' and len(email) == 21):
         return Response({'api status' : 601})
