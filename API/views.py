@@ -32,14 +32,14 @@ def liststudents(request):
             'last' : s.lastnm ,
             'email' : s.email,
             'roll' : s.roll ,
-            'branch' : s.branch ,
+            #'branch' : s.branch ,
             'cgpa' : s.cgpa ,
             'arch' : []
         }
         for arc in achievements.objects.filter(student = s):
             obj['arch'].append(arc.text)
         res.append(obj)
-    print(res)
+    #print(res)
     return Response(res)
 
 @api_view(['GET'])
@@ -53,5 +53,136 @@ def listnotice(request):
             'posted_by' : n.Posted_by
         }
         res.append(r)
-    print(res)
+    #print(res)
     return Response(res)
+
+@api_view(['POST'])
+def sign_up(request):
+    Firstnm = request.data['first']
+    Lastnm = request.data['last']
+    email = request.data['email'].lower()
+    passwd = request.data['password']
+
+    if not (email[-14:] == '@iiit-bh.ac.in' and len(email) == 21):
+        return Response({'api_status' : 601})
+    if not email[2:4] == '19':
+        return Response({'api_status':602})
+    if not email[0].lower() == 'b':
+        return Response({'api_status':603})
+    if not email[1].lower() == '5':
+        return Response({'api_status':604})
+    if int(email[4:7]) > 100:
+        return Response({'api_status':605})
+    
+    try :
+        s = students.objects.get(email = email.lower())
+        return Response({'api_status':606})
+    
+    except students.DoesNotExist :
+        s = students(firstnm = Firstnm, lastnm = Lastnm, email = email.lower(),
+            roll = email[:7], passwd = passwd, cgpa = 0)
+        s.save()
+        return Response({'api_status':700, "id": s.id})
+
+def log_in(request):
+    email = request.data['email'].lower()
+    passwd = request.data['password']
+
+    if not (email[-14:] == '@iiit-bh.ac.in' and len(email) == 21):
+        return Response({'api_status' : 601})
+    if not email[2:4] == '19':
+        return Response({'api_status':602})
+    if not email[0].lower() == 'b':
+        return Response({'api_status':603})
+    if not email[1].lower() == '5':
+        return Response({'api_status':604})
+    if int(email[4:7]) > 100:
+        return Response({'api_status':605})
+    
+    try :
+        s = students.objects.get(email = email.lower())
+        if s.passwd == passwd:
+            return Response({'api_status':700, "id": s.id})
+        else :
+            return Response({'api_status':607})        
+
+    except students.DoesNotExist :
+        return Response({'api_status':606})
+
+import json
+
+@api_view(['POST'])
+def editstudent(request):
+
+    first = request.data['first']
+    last = request.data['last']
+    email = request.data['email'].lower()
+    cgpa = request.data['cgpa']
+    address = request.data['address']
+    city = request.data['city']
+    state = request.data['state']
+    contact = request.data['contact']
+
+    #arch = json.loads(request.POST)['arch']
+    #arch = request.POST.getlist('arch')
+    arch = request.data.get('arch')
+    # print(request.POST)
+    # print(arch)
+    # print(type(arch))
+    s = students.objects.get(email = email.lower())
+    achievements.objects.filter(student = s).delete()
+    s.firstnm = first
+    s.lastnm = last
+    s.cgpa = cgpa
+    s.address = address
+    s.city = city
+    s.state = state
+    s.contact = contact
+    s.save()
+    for a in arch:
+        ar = achievements(student = s, text = a)
+        ar.save()
+    return Response({
+        'api_status' : 700
+    })
+
+@api_view(['GET'])
+def get_by_roll(request):
+    roll = request.GET['roll'].lower()
+    s = students.objects.get(roll = roll)
+    obj = {
+            'first' : s.firstnm, 
+            'last' : s.lastnm ,
+            'email' : s.email,
+            'roll' : s.roll ,
+            'cgpa' : s.cgpa ,
+            'address' : s.address,
+            'city' : s.city,
+            'state' : s.state,
+            'contact' : s.contact,
+            'arch' : []
+        }
+    for arc in achievements.objects.filter(student = s):
+            obj['arch'].append(arc.text)
+    
+    return Response(obj)
+
+@api_view(['GET'])
+def get_by_id(request, id):
+    s = students.objects.get(id = id)
+    obj = {
+            'first' : s.firstnm, 
+            'last' : s.lastnm ,
+            'email' : s.email,
+            'roll' : s.roll ,
+            'cgpa' : s.cgpa ,
+            'address' : s.address,
+            'city' : s.city,
+            'state' : s.state,
+            'contact' : s.contact,
+            'arch' : []
+        }
+    for arc in achievements.objects.filter(student = s):
+            obj['arch'].append(arc.text)
+    
+    return Response(obj)

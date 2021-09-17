@@ -6,8 +6,12 @@ class students(models.Model):
     lastnm = models.CharField(max_length=20)
     email = models.EmailField(null= True)
     roll = models.CharField(max_length=10)
-    branch = models.CharField(max_length=40)
+    passwd = models.CharField(max_length=40)
     cgpa = models.FloatField()
+    address = models.CharField(max_length=200, default="")
+    city = models.CharField(max_length=30, default="")
+    state = models.CharField(max_length=30, default="")
+    contact = models.IntegerField(default=9999999999)
 
 class notice(models.Model):
     Date = models.DateField()
