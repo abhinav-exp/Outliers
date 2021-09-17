@@ -84,6 +84,7 @@ def sign_up(request):
         s.save()
         return Response({'api_status':700, "id": s.id})
 
+@api_view(['POST'])
 def log_in(request):
     email = request.data['email'].lower()
     passwd = request.data['password']
