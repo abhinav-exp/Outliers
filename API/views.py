@@ -118,6 +118,10 @@ def editstudent(request):
     last = request.data['last']
     email = request.data['email'].lower()
     cgpa = request.data['cgpa']
+    address = request.data['address']
+    city = request.data['city']
+    state = request.data['state']
+    contact = request.data['contact']
 
     #arch = json.loads(request.POST)['arch']
     #arch = request.POST.getlist('arch')
@@ -130,6 +134,10 @@ def editstudent(request):
     s.firstnm = first
     s.lastnm = last
     s.cgpa = cgpa
+    s.address = address
+    s.city = city
+    s.state = state
+    s.contact = contact
     s.save()
     for a in arch:
         ar = achievements(student = s, text = a)
