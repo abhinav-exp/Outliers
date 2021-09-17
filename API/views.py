@@ -186,3 +186,13 @@ def get_by_id(request, id):
             obj['arch'].append(arc.text)
     
     return Response(obj)
+
+@api_view(['POST'])
+def create_poll(request):
+    text = request.data['text']
+    posted_by_id = int(request.data['id'])
+
+    obj = poll_ques(text = text, posted_by = students.objects.get(id = posted_by_id))
+    obj.save()
+    
+    
