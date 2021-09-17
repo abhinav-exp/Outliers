@@ -222,3 +222,28 @@ def get_tasks(request):
         }
         res.append(obj)
     return Response(res)
+
+@api_view(['POST'])
+def create_tasks(request):
+    student_id = request.data['student_id']
+    s = students.objects.get(id = student_id)
+    text = request.data['text']
+    obj = tasks(student = s, text = text, is_completed = False)
+    obj.save()
+    return Response({'api_status':700, 'task_id':obj.id})
+
+@api_view(['GET'])
+def complete_task(request):
+    task_id = request.GET['task_id']
+    t = tasks.objects.get(id = task_id)
+    t.is_completed = True
+    t.save()
+    return Response({'api_status':700, 'task_id':t.id})
+
+@api_view(['GET'])
+def delete_task(request):
+    task_id = request.GET['task_id']
+    tasks.objects.filter(id = task_id).delete()
+    return Response({'api_status':700})
+
+
