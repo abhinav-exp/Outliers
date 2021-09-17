@@ -6,28 +6,50 @@
       <div class="container">
         <div class="screen">
           <div class="screen__content">
-            <form class="login">
+            <div id="loading-gif" *ngIf="isLoading">
+              <img src="assets/img/25.gif" alt="Loading"  />
+            </div>
+            <div id='authentication-fail-label' *ngIf="isAuthenticationFailed">
+              {{authentication_failed_label}}
+            </div>
+            <form class="login" [formGroup]="_loginForm" #_login_ng_form="ngForm">
               <div class="login__field">
                 <i class="login__icon fas fa-user"></i>
-                <input type="text" class="login__input" placeholder="Email">
+                <input formControlName="_email" type="text" class="login__input" placeholder="Email">
+                  <div *ngIf="_loginForm.get('_email')?.hasError('required') && _login_ng_form.submitted"
+                    id="required">
+                    Required
+                  </div>
+                  <div *ngIf="_loginForm.get('_email')?.hasError('pattern') && !_loginForm.get('_email')?.hasError('required') && _login_ng_form.submitted"
+                  id="required">
+                      Invalid Email format
+                  </div>
               </div>
               <div class="login__field">
                 <i class="login__icon fas fa-lock"></i>
-                <input type="password" class="login__input" placeholder="Password">
+                <input formControlName="_password" type="password" class="login__input" placeholder="Password">
+                  <div *ngIf="_loginForm.get('_password')?.hasError('required') && _login_ng_form.submitted"
+                    id="required">
+                    Required
+                  </div>
+                  <div *ngIf="_loginForm.get('_password')?.hasError('minlength') && !_loginForm.get('_password')?.hasError('required') && _login_ng_form.submitted"
+                    id="required">
+                    Password must have atlest 4 characters
+                  </div>
               </div>
-              <button (click)="authenticateForNow($event)" class="button login__submit">
+              <button (click)="authenticateLogin($event)" class="button login__submit">
                 <span class="button__text">Log In Now</span>
                 <i class="button__icon fas fa-chevron-right"></i>
-              </button>				
+              </button>
               <button (click)="switchToSignUp($event)" class="button login__submit">Sign Up Instead</button>
             </form>
           </div>
           <div class="screen__background">
             <span class="screen__background__shape screen__background__shape4"></span>
-            <span class="screen__background__shape screen__background__shape3"></span>		
+            <span class="screen__background__shape screen__background__shape3"></span>
             <span class="screen__background__shape screen__background__shape2"></span>
             <span class="screen__background__shape screen__background__shape1"></span>
-          </div>		
+          </div>
         </div>
       </div>
     </div>
@@ -36,32 +58,77 @@
       <div class="container">
         <div class="screen">
           <div class="screen__content">
-            <form class="login">
-              <div class="login__field">
-                <i class="login__icon fas fa-user"></i>
-                <input type="text" class="login__input" placeholder="Email">
+            <div id="loading-gif" *ngIf="isLoading">
+              <img src="assets/img/25.gif" alt="Loading"  />
+            </div>
+            <div id='authentication-fail-label' *ngIf="isAuthenticationFailed">
+              {{authentication_failed_label}}
+            </div>
+            <form class="flex" [formGroup]="_signupForm" #_signup_ng_form="ngForm">
+              <div class="login">
+                <!-- <div class="flex"> -->
+                <div class="login__field">
+                  <i class="login__icon fas fa-lock"></i>
+                  <input formControlName="_firstName" type="text" class="login__input" placeholder="First Name">
+                  <div *ngIf="_signupForm.get('_firstName')?.hasError('required') && _signup_ng_form.submitted"
+                    id="required">
+                    Required
+                  </div>
+                </div>
+                <!-- </div> -->
+                <div class="login__field">
+                  <i class="login__icon fas fa-user"></i>
+                  <input formControlName="_email" type="text" class="login__input" placeholder="Email">
+                  <div *ngIf="_signupForm.get('_email')?.hasError('required') && _signup_ng_form.submitted"
+                    id="required">
+                    Required
+                  </div>
+                  <div *ngIf="_signupForm.get('_email')?.hasError('pattern') && !_signupForm.get('_email')?.hasError('required') && _signup_ng_form.submitted"
+                  id="required">
+                      Invalid Email format
+                  </div>
+                </div>
+                
+                <button (click)="authenticateSignUp($event)" class="button login__submit">
+                  <span class="button__text">Sign Up Now</span>
+                  <i class="button__icon fas fa-chevron-right"></i>
+                </button>
+                <button (click)="switchToLogin($event)" class="button login__submit">Log In Instead</button>
               </div>
-              <div class="login__field">
-                <i class="login__icon fas fa-lock"></i>
-                <input type="password" class="login__input" placeholder="Password">
+
+              <div class="login">
+                <!-- <div class="flex"> -->
+                <div class="login__field">
+                  <i class="login__icon fas fa-lock"></i>
+                  <input formControlName="_lastName" type="text" class="login__input" placeholder="Last Name">
+                  <div *ngIf="_signupForm.get('_lastName')?.hasError('required') && _signup_ng_form.submitted"
+                    id="required">
+                    Required
+                  </div>
+                </div>
+
+                <div class="login__field">
+                  <i class="login__icon fas fa-lock"></i>
+                  <input formControlName="_password" type="password" class="login__input" placeholder="Password">
+                  <div *ngIf="_signupForm.get('_password')?.hasError('required') && _signup_ng_form.submitted"
+                    id="required">
+                    Required
+                  </div>
+                  <div *ngIf="_signupForm.get('_password')?.hasError('minlength') && !_signupForm.get('_password')?.hasError('required') && _signup_ng_form.submitted"
+                    id="required">
+                    Password must have atlest 4 characters
+                  </div>
+                </div>
+                <!-- </div> -->
               </div>
-              <div class="login__field">
-                <i class="login__icon fas fa-lock"></i>
-                <input type="password" class="login__input" placeholder="Confirm Password">
-              </div>
-              <button (click)="authenticateForNow($event)" class="button login__submit">
-                <span class="button__text">Sign Up Now</span>
-                <i class="button__icon fas fa-chevron-right"></i>
-              </button>				
-              <button (click)="switchToLogin($event)" class="button login__submit">Log In Instead</button>
             </form>
           </div>
           <div class="screen__background">
             <span class="screen__background__shape screen__background__shape4"></span>
-            <span class="screen__background__shape screen__background__shape3"></span>		
+            <span class="screen__background__shape screen__background__shape3"></span>
             <span class="screen__background__shape screen__background__shape2"></span>
             <span class="screen__background__shape screen__background__shape1"></span>
-          </div>		
+          </div>
         </div>
       </div>
     </div>

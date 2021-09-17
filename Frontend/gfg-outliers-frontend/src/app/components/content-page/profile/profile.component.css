@@ -61,3 +61,18 @@ img
 ::placeholder { /* Chrome, Firefox, Opera, Safari 10.1+ */
         opacity: 0.5; /* Firefox */
   }
+
+.achievements-container
+{
+     max-height: 30rem;
+     overflow: scroll;
+}
+
+.achievements-container::-webkit-scrollbar {
+    display: none;
+}
+
+.achievements-container{
+  -ms-overflow-style: none; 
+  scrollbar-width: none; 
+}

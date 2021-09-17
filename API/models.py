@@ -21,3 +21,12 @@ class notice(models.Model):
 class achievements(models.Model):
     student = models.ForeignKey(students, on_delete=models.CASCADE, blank=True, null=True)
     text = models.CharField(max_length=200)
+
+class poll_ques(models.Model):
+    text = models.CharField(max_length=300)
+    posted_by = models.ForeignKey(students, on_delete=models.CASCADE)
+
+class poll_vote(models.Model):
+    ques = models.ForeignKey(poll_ques, on_delete=models.CASCADE)
+    voted_by = models.ForeignKey(students, on_delete=models.CASCADE)
+    vote = models.BooleanField()

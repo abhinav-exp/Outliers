@@ -3,7 +3,12 @@
         <div class="row bg-white">
             <div class="col-md-3 border-right">
                 <div class="d-flex flex-column align-items-center text-center p-3 py-5"><img  
-                    src="assets/img/abhinav.jpeg"><span class="font-weight-bold">Gullu</span><span class="text-black-50">gullu@outlook.com</span><span> </span></div>
+                    src="assets/img/empty-profile-image.png">
+                    <span class="font-weight-bold">{{_currentProfile.first}} {{_currentProfile.last}}</span>
+                    <span class="text-black-50">{{_currentProfile.roll}}</span>
+                    <span class="text-black-50">{{_currentProfile.email}}</span>
+                    <span class="text-black-50">CGPA:{{_currentProfile.cgpa}}</span>
+                    <span> </span></div>
             </div>
             <div class="col-md-5 border-right">
                 <div class="p-3 py-5">
@@ -21,8 +26,8 @@
                         <!-- <div class="col-md-12"><label class="labels">Education</label><input type="text" class="form-control" placeholder="education" value=""></div> -->
                     </div>
                     <div class="row mt-3">
-                        <div class="col-md-6"><label class="labels">Country</label><input formControlName='country' type="text" class="form-control" placeholder="country" value=""></div>
-                        <div class="col-md-6"><label class="labels">State/Region</label><input formControlName='city' type="text" class="form-control" value="" placeholder="state"></div>
+                        <div class="col-md-6"><label class="labels">State</label><input formControlName='state' type="text" class="form-control" placeholder="state" value=""></div>
+                        <div class="col-md-6"><label class="labels">City</label><input formControlName='city' type="text" class="form-control" value="" placeholder="city"></div>
                     </div>
                     <div class="mt-5 text-center"><button class="btn btn-primary profile-button" type="submit">Save Profile</button></div>
                 </div>
@@ -30,8 +35,14 @@
             <div class="col-md-4">
                 <div class="p-3 py-5">
                     <div class="d-flex justify-content-between align-items-center experience"><span>Achievements</span></div><br>
-                    <div class="col-md-12"><label class="labels">Achievement 1</label><input type="text" class="form-control" placeholder="experience" value=""></div> <br>
-                    <div class="col-md-12"><label class="labels">Achievement 2</label><input type="text" class="form-control" placeholder="additional details" value=""></div>
+                    <div class="achievements-container">
+                        <div class="col-md-12"><label class="labels">Achievement 1</label><textarea type="text" class="form-control" placeholder="" value=""></textarea></div> <br>
+                        <div class="col-md-12"><label class="labels">Achievement 2</label><textarea type="text" class="form-control" placeholder="" value=""></textarea></div>
+                        <div class="col-md-12"><label class="labels">Achievement 3</label><textarea type="text" class="form-control" placeholder="" value=""></textarea></div> <br>
+                        <div class="col-md-12"><label class="labels">Achievement 4</label><textarea type="text" class="form-control" placeholder="" value=""></textarea></div>
+                        <div class="col-md-12"><label class="labels">Achievement 5</label><textarea type="text" class="form-control" placeholder="" value=""></textarea></div> <br>
+                        <div class="col-md-12"><label class="labels">Achievement 6</label><textarea type="text" class="form-control" placeholder="" value=""></textarea></div>
+                    </div>
                 </div>
             </div>
         </div>

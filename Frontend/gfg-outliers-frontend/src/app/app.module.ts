@@ -12,7 +12,7 @@ import { NoticeBoardComponent } from './components/content-page/notice-board/not
 import { ContentService } from './content-service.service';
 import { HttpClientModule } from '@angular/common/http';
 import { ProfileComponent } from './components/content-page/profile/profile.component';
-import { ReactiveFormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { ToDoListComponent } from './components/content-page/to-do-list/to-do-list.component';
 
 @NgModule({
@@ -31,6 +31,7 @@ import { ToDoListComponent } from './components/content-page/to-do-list/to-do-li
     BrowserModule,
     AppRoutingModule,
     BrowserModule,
+    FormsModule,
     HttpClientModule,
     ReactiveFormsModule
   ],

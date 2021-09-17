@@ -11,4 +11,7 @@ urlpatterns = [
     path('edit_students', editstudent),
     path('get_by_roll', get_by_roll),
     path('get_by_id/<int:id>', get_by_id),
+    # path('create_poll'),
+    # path('view_poll'),
+    # path('vote/<int:id>'),
 ]
