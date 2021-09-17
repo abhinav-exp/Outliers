@@ -49,6 +49,14 @@ export class ContentService
         return this.httpClient
         .get<any>(url);
       }
+
+      updateProfile(_body:any)
+      {
+        const url = "https://teamoutliers.herokuapp.com/api/edit_students";
+        console.log(url);
+        return this.httpClient
+        .post<any>(url,_body);
+      }
  
 
 

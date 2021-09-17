@@ -76,3 +76,23 @@ img
   -ms-overflow-style: none; 
   scrollbar-width: none; 
 }
+
+.flex
+{
+     display: flex;
+     justify-content: center;
+     align-items: center;
+}
+
+#load-gif
+{
+     width: 1.5rem;
+     height: 1.5rem;
+     border-radius: 50% ;
+}
+
+#required{
+    background: antiquewhite;
+    padding: 0px 0px 1px 3px;
+    margin-top: 0.2rem;
+}
