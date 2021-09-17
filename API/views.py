@@ -82,6 +82,8 @@ def sign_up(request):
         s = students(firstnm = Firstnm, lastnm = Lastnm, email = email.lower(),
             roll = email[:7], passwd = passwd, cgpa = 0)
         s.save()
+        for a in range(5):
+            b = achievements(student = s)
         return Response({'api_status':700, "id": s.id})
 
 @api_view(['POST'])
@@ -196,4 +198,9 @@ def create_poll(request):
     obj = poll_ques(text = text, posted_by = students.objects.get(id = posted_by_id))
     obj.save()
     
-    
+    return Response({'api_status':700, 'ques_id':obj.id})
+
+@api_view(['GET'])
+def view_poll(request):
+    for o in poll_ques.objects.all():
+        pass
