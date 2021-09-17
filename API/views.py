@@ -82,7 +82,7 @@ def sign_up(request):
         s = students(firstnm = Firstnm, lastnm = Lastnm, email = email.lower(),
             roll = email[:7], passwd = passwd, cgpa = 0)
         s.save()
-        return Response({'api_status':700})
+        return Response({'api_status':700, "id": s.id})
 
 def log_in(request):
     email = request.data['email'].lower()
@@ -142,6 +142,26 @@ def editstudent(request):
 def get_by_roll(request):
     roll = request.GET['roll'].lower()
     s = students.objects.get(roll = roll)
+    obj = {
+            'first' : s.firstnm, 
+            'last' : s.lastnm ,
+            'email' : s.email,
+            'roll' : s.roll ,
+            'cgpa' : s.cgpa ,
+            'address' : s.address,
+            'city' : s.city,
+            'state' : s.state,
+            'contact' : s.contact,
+            'arch' : []
+        }
+    for arc in achievements.objects.filter(student = s):
+            obj['arch'].append(arc.text)
+    
+    return Response(obj)
+
+@api_view(['GET'])
+def get_by_id(request, id):
+    s = students.objects.get(id = id)
     obj = {
             'first' : s.firstnm, 
             'last' : s.lastnm ,
