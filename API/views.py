@@ -64,50 +64,50 @@ def sign_up(request):
     passwd = request.data['password']
 
     if not (email[-14:] == '@iiit-bh.ac.in' and len(email) == 21):
-        return Response({'api status' : 601})
+        return Response({'api_status' : 601})
     if not email[2:4] == '19':
-        return Response({'api status':602})
+        return Response({'api_status':602})
     if not email[0].lower() == 'b':
-        return Response({'api status':603})
+        return Response({'api_status':603})
     if not email[1].lower() == '5':
-        return Response({'api status':604})
+        return Response({'api_status':604})
     if int(email[4:7]) > 100:
-        return Response({'api status':605})
+        return Response({'api_status':605})
     
     try :
         s = students.objects.get(email = email.lower())
-        return Response({'api status':606})
+        return Response({'api_status':606})
     
     except students.DoesNotExist :
         s = students(firstnm = Firstnm, lastnm = Lastnm, email = email.lower(),
             roll = email[:7], passwd = passwd, cgpa = 0)
         s.save()
-        return Response({'api status':700})
+        return Response({'api_status':700})
 
 def log_in(request):
     email = request.data['email'].lower()
     passwd = request.data['password']
 
     if not (email[-14:] == '@iiit-bh.ac.in' and len(email) == 21):
-        return Response({'api status' : 601})
+        return Response({'api_status' : 601})
     if not email[2:4] == '19':
-        return Response({'api status':602})
+        return Response({'api_status':602})
     if not email[0].lower() == 'b':
-        return Response({'api status':603})
+        return Response({'api_status':603})
     if not email[1].lower() == '5':
-        return Response({'api status':604})
+        return Response({'api_status':604})
     if int(email[4:7]) > 100:
-        return Response({'api status':605})
+        return Response({'api_status':605})
     
     try :
         s = students.objects.get(email = email.lower())
         if s.passwd == passwd:
-            return Response({'api status':700})
+            return Response({'api_status':700})
         else :
-            return Response({'api status':607})        
+            return Response({'api_status':607})        
 
     except students.DoesNotExist :
-        return Response({'api status':606})
+        return Response({'api_status':606})
 
 import json
 
@@ -135,7 +135,7 @@ def editstudent(request):
         ar = achievements(student = s, text = a)
         ar.save()
     return Response({
-        'api status' : 700
+        'api_status' : 700
     })
 
 @api_view(['GET'])
