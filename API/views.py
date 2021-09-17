@@ -38,6 +38,8 @@ def liststudents(request):
         }
         for arc in achievements.objects.filter(student = s):
             obj['arch'].append(arc.text)
+        if len(obj['arch']) == 0:
+            obj['arch'] = [""]*5 
         res.append(obj)
     #print(res)
     return Response(res)
@@ -82,8 +84,12 @@ def sign_up(request):
         s = students(firstnm = Firstnm, lastnm = Lastnm, email = email.lower(),
             roll = email[:7], passwd = passwd, cgpa = 0)
         s.save()
+        for a in range(5):
+            b = achievements(student = s)
+            b.save()
         return Response({'api_status':700, "id": s.id})
 
+@api_view(['POST'])
 def log_in(request):
     email = request.data['email'].lower()
     passwd = request.data['password']
@@ -195,4 +201,49 @@ def create_poll(request):
     obj = poll_ques(text = text, posted_by = students.objects.get(id = posted_by_id))
     obj.save()
     
-    
+    return Response({'api_status':700, 'ques_id':obj.id})
+
+@api_view(['GET'])
+def view_poll(request):
+    for o in poll_ques.objects.all():
+        pass
+
+@api_view(['GET'])
+def get_tasks(request):
+    student_id = request.GET['student_id']
+    s = students.objects.get(id = student_id)
+    l = tasks.objects.filter(student = s).order_by('is_completed')
+    res = []
+    for o in l:
+        obj = {
+            'id':o.id,
+            'text' : o.text,
+            'is_completed' : o.is_completed
+        }
+        res.append(obj)
+    return Response(res)
+
+@api_view(['POST'])
+def create_tasks(request):
+    student_id = request.data['student_id']
+    s = students.objects.get(id = student_id)
+    text = request.data['text']
+    obj = tasks(student = s, text = text, is_completed = False)
+    obj.save()
+    return Response({'api_status':700, 'task_id':obj.id})
+
+@api_view(['GET'])
+def complete_task(request):
+    task_id = request.GET['task_id']
+    t = tasks.objects.get(id = task_id)
+    t.is_completed = True
+    t.save()
+    return Response({'api_status':700, 'task_id':t.id})
+
+@api_view(['GET'])
+def delete_task(request):
+    task_id = request.GET['task_id']
+    tasks.objects.filter(id = task_id).delete()
+    return Response({'api_status':700})
+
+
