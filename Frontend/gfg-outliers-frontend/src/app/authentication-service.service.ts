@@ -10,7 +10,7 @@ import { retry, catchError, map } from "rxjs/operators";
 @Injectable({
     providedIn: "root",
 })
-export class ContentService 
+export class AuthenticationService
 {
     setheaders() {
         return (
@@ -26,30 +26,27 @@ export class ContentService
         private httpClient: HttpClient,
       ) { }
 
-      getStudentsList()
+      activeId:any;
+
+      
+
+      authenticate_sign_up(_body:any)
       {
-        const url = "https://teamoutliers.herokuapp.com/api/liststudents";
+        const url = "https://teamoutliers.herokuapp.com/api/sign_up";
         console.log(url);
         return this.httpClient
-        .get<any>(url);
+        .post<any>(url,_body);
       }
 
-      getNoticeBoardList()
+      authenticate_log_in(_body:any)
       {
-        const url = "https://teamoutliers.herokuapp.com/api/listnotice";
+        const url = "https://teamoutliers.herokuapp.com/api/log_in";
         console.log(url);
         return this.httpClient
-        .get<any>(url);
+        .post<any>(url,_body);
       }
 
-      getProfileById(id:number)
-      {
-        const url = "https://teamoutliers.herokuapp.com/api/get_by_id/"+id;
-        console.log(url);
-        return this.httpClient
-        .get<any>(url);
-      }
- 
+      
 
 
 }

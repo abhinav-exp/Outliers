@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
+import { AppComponent } from './app.component';
 import { NoticeBoardComponent } from './components/content-page/notice-board/notice-board.component';
 import { ProfileComponent } from './components/content-page/profile/profile.component';
 import { StudentListComponent } from './components/content-page/student-list/student-list.component';

@@ -221,3 +221,11 @@ footer
     font-weight: bold;
 }
 
+#loading-gif
+{
+    position: absolute;
+    width: 2rem;
+    right: 4rem;
+    top: 2rem;
+}
+
