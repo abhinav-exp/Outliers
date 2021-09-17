@@ -38,6 +38,8 @@ def liststudents(request):
         }
         for arc in achievements.objects.filter(student = s):
             obj['arch'].append(arc.text)
+        if len(obj['arch']) == 0:
+            obj['arch'] = [""]*5 
         res.append(obj)
     #print(res)
     return Response(res)
@@ -204,3 +206,8 @@ def create_poll(request):
 def view_poll(request):
     for o in poll_ques.objects.all():
         pass
+
+@api_view(['GET'])
+def get_tasks(request):
+    student_id = request.GET['student_id']
+    s = students.objects.get(id = student_id)
