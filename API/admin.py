@@ -5,3 +5,4 @@ from .models import *
 admin.site.register(students)
 admin.site.register(achievements)
 admin.site.register(notice)
+admin.site.register(tasks)

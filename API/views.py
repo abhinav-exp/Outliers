@@ -86,6 +86,7 @@ def sign_up(request):
         s.save()
         for a in range(5):
             b = achievements(student = s)
+            b.save()
         return Response({'api_status':700, "id": s.id})
 
 @api_view(['POST'])
@@ -211,3 +212,13 @@ def view_poll(request):
 def get_tasks(request):
     student_id = request.GET['student_id']
     s = students.objects.get(id = student_id)
+    l = tasks.objects.filter(student = s).order_by('is_completed')
+    res = []
+    for o in l:
+        obj = {
+            'id':o.id,
+            'text' : o.text,
+            'is_completed' : o.is_completed
+        }
+        res.append(obj)
+    return Response(res)
