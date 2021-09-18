@@ -1,32 +1,68 @@
 <div class="row">
     <div class="col-sm-6 list-container">
 
-        <div class="add-task-card">
+        <div class="add-task-card" (click)="toggleTaskWindow($event)">
             Add Task
         </div>
-        <div class="main-container">
-            
-            <div class="cards" *ngFor="let task of todoList;index as i" (click)="taskClicked(task)">
-              <div class="card card-{{(i%5)+1}}">
-                <div class="mark-complete">
-                    Mark As Complete
+        <div class="add-task-form-card" *ngIf="_displayAddCard">
+            <form [formGroup]='_taskForm' #taskForm='ngForm' (ngSubmit)="addTaskForUser($event)">
+                <div class="form-container">
+                    <textarea formControlName='text' type="text" class="form-control" placeholder="Enter Task"
+                        value=""></textarea>
+                    <div *ngIf="_taskForm.get('text')?.hasError('required') && taskForm.submitted" id="required">
+                        Required
+                    </div>
+                    <div>
+                        <div class="row deadline-container">
+                            <div class="col-sm-2">Deadline:</div>
+                            <div class="col-sm-10"><input formControlName="date" min="{{_minDateString}}" type="date"></div>
+                        </div>
+                    </div>
+                    <div *ngIf="_taskForm.get('date')?.hasError('required') && taskForm.submitted" id="required">
+                        Required
+                    </div>
+                    <div class="button-container text-center"><button class="btn btn-primary profile-button" type="submit">Create
+                            Task</button>
+                    </div>
+                    <div *ngIf="_loading" class="flex">
+                        <img id='load-gif' src="assets/img/26.gif" alt="Loading" />
+                    </div>
                 </div>
-                <p class="card__exit"><i class="fas fa-times"></i></p>
-                <h2 class="card__title">Lorem ipsum dolor sit amet, consectetur adipiscing elit.</h2>
-              </div>
+            </form>
+        </div>
+        <div class="main-container">
+            <div *ngIf="todoList.length==0">
+                <div class="no-task-label">No Tasks Assigned... Relax</div>
             </div>
-          </div>
-        
+            <div *ngIf="todoList.length>0">
+                <div class="cards" *ngFor="let task of todoList;index as i" (click)="taskClicked(task)">
+                    <div class="card card-{{(i%5)+1}}">
+                        <div *ngIf="!task.is_completed" title="Mark this task as completed" class="mark-complete" (click)="markTaskAsComplete(task.id)">
+                            Mark As Complete
+                        </div>
+                        <div *ngIf="task.is_completed" title="This task is completed" class="mark-completed">
+                            Completed
+                        </div>
+                        <p class="card__exit" title="Delete Task" (click)="deleteTaskFromList(task.id)"><i class="fas fa-trash"></i></p>
+                        <p id="task" class="card__title">{{task.text}}</p>
+                        <span id="deadline-span">Deadline : {{task.date | date:"dd MMM YYYY"}}</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
     </div>
     <div class="col-sm-6 full-notice-container">
         <div class="notice-board">
             <div *ngFor="let task of currentTask">
-                <p>
-                    {{task.task}}
-                </p>
-                <h2>Deadline : {{task.deadline | date:"dd MMM YYYY"}}</h2>
+                 <div>
+                    <p>
+                        {{task.text}}
+                    </p>
+                 </div>
+                <h2>Deadline : {{task.date | date:"dd MMM YYYY"}}</h2>
             </div>
         </div>
     </div>
 </div>
-

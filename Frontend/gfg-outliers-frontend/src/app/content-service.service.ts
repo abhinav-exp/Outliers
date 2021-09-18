@@ -57,6 +57,38 @@ export class ContentService
         return this.httpClient
         .post<any>(url,_body);
       }
+
+      getTasksByStudentId(studentId:any)
+      {
+        const url = "https://teamoutliers.herokuapp.com/api/get_task?student_id="+studentId;
+        console.log(url);
+        return this.httpClient
+        .get<any>(url);
+      }
+
+      createTask(_body:any)
+      {
+        const url = "https://teamoutliers.herokuapp.com/api/create_task";
+        console.log(url);
+        return this.httpClient
+        .post<any>(url,_body);
+      }
+
+      markTaskAsCompleted(studentId:any)
+      {
+        const url = "https://teamoutliers.herokuapp.com/api/complete_task?task_id="+studentId;
+        console.log(url);
+        return this.httpClient
+        .get<any>(url);
+      }
+
+      deleteTaskFromList(studentId:any)
+      {
+        const url = "https://teamoutliers.herokuapp.com/api/delete_task?task_id="+studentId;
+        console.log(url);
+        return this.httpClient
+        .get<any>(url);
+      }
  
 
 
