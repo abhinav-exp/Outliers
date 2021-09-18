@@ -5,6 +5,8 @@ from .serializers import StudentSerializer
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
 from rest_framework import status
+from datetime import date
+
 
 # Create your views here.
 def req(request):
@@ -218,7 +220,8 @@ def get_tasks(request):
         obj = {
             'id':o.id,
             'text' : o.text,
-            'is_completed' : o.is_completed
+            'is_completed' : o.is_completed,
+            'date': str(o.date.day) + "-" + str(o.date.month) + "-" + str(o.date.year)
         }
         res.append(obj)
     return Response(res)
@@ -228,7 +231,9 @@ def create_tasks(request):
     student_id = request.data['student_id']
     s = students.objects.get(id = student_id)
     text = request.data['text']
-    obj = tasks(student = s, text = text, is_completed = False)
+    dat = request.data['date']
+    dobj = date(int(dat[6:]),int(dat[3:5]), int(dat[:2]) )
+    obj = tasks(student = s, text = text, is_completed = False, date = dobj)
     obj.save()
     return Response({'api_status':700, 'task_id':obj.id})
 

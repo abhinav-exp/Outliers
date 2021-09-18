@@ -35,3 +35,4 @@ class tasks(models.Model):
     text = models.CharField(max_length=300)
     student = models.ForeignKey(students, on_delete=models.CASCADE)
     is_completed = models.BooleanField()
+    date = models.DateField()
