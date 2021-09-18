@@ -318,4 +318,13 @@ def delete_task(request):
     tasks.objects.filter(id = task_id).delete()
     return Response({'api_status':700})
 
+@api_view(['POST'])
+def create_notice(request):
+    student_id = request.data['student_id']
+    text = request.data['text']
+    notic = notice(Date = date.today(), Text = text, Posted_by = students.objects.get(id = student_id))
+    notic.save()
+    return Response({
+        'api_status':700
+    })
 
