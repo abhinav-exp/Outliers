@@ -198,7 +198,7 @@ def get_by_id(request, id):
 @api_view(['POST'])
 def create_poll(request):
     text = request.data['text']
-    posted_by_id = int(request.data['id'])
+    posted_by_id = int(request.data['student_id'])
 
     obj = poll_ques(text = text, posted_by = students.objects.get(id = posted_by_id))
     obj.save()
@@ -207,7 +207,23 @@ def create_poll(request):
 
 @api_view(['GET'])
 def view_poll(request):
+    res = []
     for o in poll_ques.objects.all():
+        obj = {
+            'id':o.id,
+            'text':o.text,
+            'posted_by_id':o.posted_by.id
+        }
+        res.append(obj)
+    return Response(res)
+
+@api_view(['GET'])
+def check_vote(request):
+    student_id = request.GET['student_id']
+    poll_id = request.GET['poll_id']
+    try :
+        pass
+    except:
         pass
 
 @api_view(['GET'])
@@ -221,7 +237,7 @@ def get_tasks(request):
             'id':o.id,
             'text' : o.text,
             'is_completed' : o.is_completed,
-            'date': str(o.date.day) + "-" + str(o.date.month) + "-" + str(o.date.year)
+            'date': str(o.date)[8:] + "-" + str(o.date)[5:7] + "-" + str(o.date)[:4]
         }
         res.append(obj)
     return Response(res)

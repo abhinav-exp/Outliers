@@ -15,7 +15,7 @@ urlpatterns = [
     path('create_task', create_tasks),
     path('complete_task', complete_task),
     path('delete_task', delete_task),
-    # path('create_poll'),
-    # path('view_poll'),
+    path('create_poll', create_poll),
+    path('view_poll', view_poll),
     # path('vote/<int:id>'),
 ]
