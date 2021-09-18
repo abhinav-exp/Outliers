@@ -54,7 +54,7 @@ def listnotice(request):
         r = {
             'date' : str(n.Date),
             'text' : n.Text,
-            'posted_by' : n.Posted_by
+            'posted_by' : "B519100 (CR)"
         }
         res.append(r)
     #print(res)
@@ -212,8 +212,33 @@ def view_poll(request):
         obj = {
             'id':o.id,
             'text':o.text,
-            'posted_by_id':o.posted_by.id
+            'posted_by_id':o.posted_by.id,
+            'yes_votes':len( poll_vote.objects.filter(ques = o, vote = True) ),
+            'no_votes':len( poll_vote.objects.filter(ques = o, vote = False) ),
         }
+        res.append(obj)
+    return Response(res)
+
+@api_view(['GET'])
+def list_poll(request):
+    student_id = request.GET['student_id']
+    s = students.objects.get(id = student_id)
+    res = []
+    for o in poll_ques.objects.all():
+        obj = {
+            'id':o.id,
+            'text':o.text,
+            'posted_by_id':o.posted_by.id,
+            'yes_votes':len( poll_vote.objects.filter(ques = o, vote = True) ),
+            'no_votes':len( poll_vote.objects.filter(ques = o, vote = False) ),
+        }
+        try :
+            vot = poll_vote.objects.get(ques = o, voted_by = s)
+            obj['voted'] = True
+            obj['vote'] = vot.vote
+        except :
+            obj['voted'] = False
+            obj['vote'] = -1
         res.append(obj)
     return Response(res)
 
@@ -222,9 +247,33 @@ def check_vote(request):
     student_id = request.GET['student_id']
     poll_id = request.GET['poll_id']
     try :
-        pass
+        vot = poll_vote.objects.get(ques = poll_ques.objects.get(id = poll_id),
+            voted_by = students.objects.get(id = student_id))
+        return Response({
+            'voted' : True,
+            'vote' : vot.vote
+        })
     except:
-        pass
+        return Response({
+            'voted' : False
+        })
+
+@api_view(['GET'])
+def vote(request):
+    student_id = request.GET['student_id']
+    poll_id = request.GET['poll_id']
+    vote = bool(request.GET['vote'] == '1')
+    try : 
+        vot = poll_vote.objects.get(ques = poll_ques.objects.get(id = poll_id),
+            voted_by = students.objects.get(id = student_id))
+        return Response({'api_status':600})
+    except : 
+        v = poll_vote(ques = poll_ques.objects.get(id = poll_id),
+            voted_by = students.objects.get(id = student_id),
+            vote = vote)
+        v.save()
+        return Response({'api_status':700})
+
 
 @api_view(['GET'])
 def get_tasks(request):
