@@ -5,6 +5,8 @@ from .serializers import StudentSerializer
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
 from rest_framework import status
+from datetime import date
+
 
 # Create your views here.
 def req(request):
@@ -38,6 +40,8 @@ def liststudents(request):
         }
         for arc in achievements.objects.filter(student = s):
             obj['arch'].append(arc.text)
+        if len(obj['arch']) == 0:
+            obj['arch'] = [""]*5 
         res.append(obj)
     #print(res)
     return Response(res)
@@ -82,8 +86,12 @@ def sign_up(request):
         s = students(firstnm = Firstnm, lastnm = Lastnm, email = email.lower(),
             roll = email[:7], passwd = passwd, cgpa = 0)
         s.save()
+        for a in range(5):
+            b = achievements(student = s)
+            b.save()
         return Response({'api_status':700, "id": s.id})
 
+@api_view(['POST'])
 def log_in(request):
     email = request.data['email'].lower()
     passwd = request.data['password']
@@ -190,9 +198,73 @@ def get_by_id(request, id):
 @api_view(['POST'])
 def create_poll(request):
     text = request.data['text']
-    posted_by_id = int(request.data['id'])
+    posted_by_id = int(request.data['student_id'])
 
     obj = poll_ques(text = text, posted_by = students.objects.get(id = posted_by_id))
     obj.save()
     
-    
+    return Response({'api_status':700, 'ques_id':obj.id})
+
+@api_view(['GET'])
+def view_poll(request):
+    res = []
+    for o in poll_ques.objects.all():
+        obj = {
+            'id':o.id,
+            'text':o.text,
+            'posted_by_id':o.posted_by.id
+        }
+        res.append(obj)
+    return Response(res)
+
+@api_view(['GET'])
+def check_vote(request):
+    student_id = request.GET['student_id']
+    poll_id = request.GET['poll_id']
+    try :
+        pass
+    except:
+        pass
+
+@api_view(['GET'])
+def get_tasks(request):
+    student_id = request.GET['student_id']
+    s = students.objects.get(id = student_id)
+    l = tasks.objects.filter(student = s).order_by('is_completed')
+    res = []
+    for o in l:
+        obj = {
+            'id':o.id,
+            'text' : o.text,
+            'is_completed' : o.is_completed,
+            'date': str(o.date)[8:] + "-" + str(o.date)[5:7] + "-" + str(o.date)[:4]
+        }
+        res.append(obj)
+    return Response(res)
+
+@api_view(['POST'])
+def create_tasks(request):
+    student_id = request.data['student_id']
+    s = students.objects.get(id = student_id)
+    text = request.data['text']
+    dat = request.data['date']
+    dobj = date(int(dat[6:]),int(dat[3:5]), int(dat[:2]) )
+    obj = tasks(student = s, text = text, is_completed = False, date = dobj)
+    obj.save()
+    return Response({'api_status':700, 'task_id':obj.id})
+
+@api_view(['GET'])
+def complete_task(request):
+    task_id = request.GET['task_id']
+    t = tasks.objects.get(id = task_id)
+    t.is_completed = True
+    t.save()
+    return Response({'api_status':700, 'task_id':t.id})
+
+@api_view(['GET'])
+def delete_task(request):
+    task_id = request.GET['task_id']
+    tasks.objects.filter(id = task_id).delete()
+    return Response({'api_status':700})
+
+

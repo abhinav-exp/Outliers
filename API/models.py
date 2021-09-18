@@ -30,3 +30,9 @@ class poll_vote(models.Model):
     ques = models.ForeignKey(poll_ques, on_delete=models.CASCADE)
     voted_by = models.ForeignKey(students, on_delete=models.CASCADE)
     vote = models.BooleanField()
+
+class tasks(models.Model):
+    text = models.CharField(max_length=300)
+    student = models.ForeignKey(students, on_delete=models.CASCADE)
+    is_completed = models.BooleanField()
+    date = models.DateField()
