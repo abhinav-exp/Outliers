@@ -54,7 +54,7 @@ def listnotice(request):
         r = {
             'date' : str(n.Date),
             'text' : n.Text,
-            'posted_by' : "B519100 (CR)"
+            'posted_by' : str(n.Posted_by.firstnm) + " " + str(n.Posted_by.lastnm)
         }
         res.append(r)
     #print(res)
