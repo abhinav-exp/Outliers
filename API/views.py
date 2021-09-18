@@ -191,7 +191,9 @@ def get_by_id(request, id):
             'arch' : []
         }
     for arc in achievements.objects.filter(student = s):
-            obj['arch'].append(arc.text)
+        obj['arch'].append(arc.text)
+    if len(obj['arch']) == 0:
+        obj['arch'] = [""]*5 
     
     return Response(obj)
 
