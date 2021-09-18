@@ -52,6 +52,7 @@ def listnotice(request):
     res = []
     for n in notices:
         r = {
+            'id' : n.id,
             'date' : str(n.Date),
             'text' : n.Text,
             'posted_by' : str(n.Posted_by.firstnm) + " " + str(n.Posted_by.lastnm)
@@ -325,6 +326,21 @@ def create_notice(request):
     notic = notice(Date = date.today(), Text = text, Posted_by = students.objects.get(id = student_id))
     notic.save()
     return Response({
-        'api_status':700
+        'api_status':700,
+        'id':notic.id
     })
 
+@api_view(['GET'])
+def delete_notice(request):
+    notice_id = request.GET['notice_id']
+    notice.objects.filter(id = notice_id).delete()
+    return Response({'api_status':700})
+
+@api_view(['POST'])
+def edit_notice(request):
+    notice_id = request.data['notice_id']
+    text = request.data['text']
+    notic = notice.objects.get(id = notice_id)
+    notic.Text = text
+    notic.save()
+    return Response({'api_status':700})

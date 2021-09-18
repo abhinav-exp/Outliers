@@ -21,4 +21,6 @@ urlpatterns = [
     path('check_vote',check_vote),
     path('list_poll', list_poll),
     path('create_notice', create_notice),
+    path('delete_notice', delete_notice),
+    path('edit_notice', edit_notice),
 ]
