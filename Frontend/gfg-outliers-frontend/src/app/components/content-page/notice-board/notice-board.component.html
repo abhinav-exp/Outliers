@@ -1,24 +1,65 @@
-<div class="row">
-    <div class="col-sm-6 list-container">
-        <ol class="gradient-list">
-            <li *ngFor="let notice of listOfNotice" (click)="noticeClicked(notice)">
-                <p>
-                    {{notice.text}}
-                </p>
-                <strong id="date">Posted On: {{notice.date | date:"dd MMM YYYY"}}</strong>
-            </li>
-          </ol>
-        
-    </div>
-    <div class="col-sm-6 full-notice-container">
-        <div class="notice-board">
-            <div *ngFor="let noticeDetails of noticePicked">
-                <h2>Date : {{noticeDetails.date | date:"dd MMM YYYY"}}</h2>
-                <p>
-                    {{noticeDetails.text}}
-                </p>
-                <h4>Posted by : {{noticeDetails.posted_by}}</h4>
+<div *ngIf="_isAddEditMode">
+    <div class="add-edit-notice-container">
+        <div class="add-edit-notice">
+            <div class="add-edit-back-button">
+                <button (click)="backToListPage()" >Cancel</button>
+            </div>
+            <div class="add-edit-notice-heading">
+                <h3>{{_addEditTitle}}</h3>
+            </div>
+            <div class="add-edit-notice-body">
+                <textarea [(ngModel)]='_noticeModel' name="body" id="body"></textarea>
+            </div>
+            <div *ngIf="(_noticeModel!=null && _noticeModel!=undefined && _noticeModel.length>0)">
+                <div class="add-edit-save-button post">
+                    <button (click)="saveAndPost()">Save And Post</button>
+                </div>
+            </div>
+            <div *ngIf="!(_noticeModel!=null && _noticeModel!=undefined && _noticeModel.length>0)">
+                <div class="add-edit-save-button">
+                    <button>Please Type A Notice To Post</button>
+                </div>
             </div>
         </div>
     </div>
 </div>
+<div *ngIf="!_isAddEditMode">
+    <div class="row">
+        <div class="col-sm-6">
+            <div class="add-notice-card" *ngIf="_isCR_authenticated" (click)="openAddNoticePage()" >
+                Add Notice
+            </div>
+            <div class="list-container">
+                <ol class="gradient-list">
+                    <li *ngFor="let notice of listOfNotice" (click)="noticeClicked(notice)">
+                        <span *ngIf="_isCR_authenticated" class="edit-icon"
+                                (click)="openEditNoticePage(notice)">
+                            <i class="fas fa-edit"></i>
+                        </span>
+                        <span *ngIf="_isCR_authenticated" class="delete-icon"
+                                (click)="deleteNotice(notice.id)">
+                            <i class="fas fa-trash"></i>
+                        </span>
+                        <p>
+                            {{notice.text}}
+                        </p>
+                        <strong id="date">Posted On: {{notice.date | date:"dd MMM YYYY"}}</strong>
+                    </li>
+                  </ol>
+            </div>
+            
+        </div>
+        <div class="col-sm-6 full-notice-container">
+            <div class="notice-board">
+                <div *ngFor="let noticeDetails of noticePicked">
+                    <h2>Date : {{noticeDetails.date | date:"dd MMM YYYY"}}</h2>
+                    <p>
+                        {{noticeDetails.text}}
+                    </p>
+                    <h4>Posted by : {{noticeDetails.posted_by}}</h4>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
