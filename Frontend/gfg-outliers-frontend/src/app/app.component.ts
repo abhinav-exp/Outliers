@@ -47,6 +47,12 @@ export class AppComponent implements OnInit {
     this.isAuthenticated = false;
     this.signUpMode = false;
     this.loginMode = true;
+    // this.devMode();
+  }
+
+  devMode()
+  {
+       this.isAuthenticated = true;
   }
 
   switchToSignUp(event:any)

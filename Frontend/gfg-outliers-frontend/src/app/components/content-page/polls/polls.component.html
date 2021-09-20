@@ -1,0 +1,85 @@
+<div class="poll-container">
+    <ul class="poll-ul">
+        <li>
+            <div class="add-poll-card">
+                <div *ngIf="_isCreatePollLoading" class="loading-flex">    
+                      <img id='load-gif' src="assets/img/26.gif" alt="Loading" />
+                </div>
+                <div *ngIf="!_isCreatePollLoading">
+                    <div class="create-poll-heading">
+                        CREATE POLL
+                    </div>
+                    <div class="create-poll-body">
+                        <div class="create-poll-input">
+                            <textarea [(ngModel)]="_createPollInput" name="create" id="create"  rows="5"
+                             placeholder="Type here"></textarea>
+                        </div>
+                    </div>
+                    <div *ngIf="_createPollInput!=null && _createPollInput!=undefined && _createPollInput.length>0">
+                        <div class="create-poll-button">
+                            <button (click)="_createPoll()" class="create-button-active">CREATE</button>
+                        </div>
+                    </div>
+                    <div *ngIf="!(_createPollInput!=null && _createPollInput!=undefined && _createPollInput.length>0)">
+                        <div class="create-poll-button">
+                            <button class="create-button-inactive">Please Give A Poll Title</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </li>
+        <li *ngFor="let poll of _polls">
+            <div class="poll-card">
+                <div *ngIf="poll.voted==true">
+                    <div class="voted-heading">
+                        VOTED
+                    </div>
+                    <div class="poll-text-container-voted">
+                        <p title="{{poll.text}}">{{poll.text}}</p>
+                    </div>
+
+                    <div class="voted-button-flex">
+                        <div class="yes-vote-container">
+                            <div class="yes-tag">
+                                Yes
+                            </div>
+                            <div class="votes">
+                                {{poll.yes_votes}}
+                            </div>
+                        </div>
+                        <div class="no-vote-container">
+                            <div class="no-tag">
+                                No
+                            </div>
+                            <div class="votes">
+                                {{poll.no_votes}}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div *ngIf="poll.voted==false">
+                    <div class="poll-text-container">
+                        <p title="{{poll.text}}">{{poll.text}}</p>
+                    </div>
+
+
+                    <div class="button-flex">
+                        <button id='yes-button' (click)="voteForPoll(poll,1)">Yes</button>
+                        <button id='no-button' (click)="voteForPoll(poll,0)">No</button>
+                    </div>
+                </div>
+            </div>
+
+        </li>
+    </ul>
+    <!-- <div *ngFor="let poll of _polls" style="display: inline;">
+            <div class="poll-card" style="display: inline;">
+                <div *ngIf="poll.voted==true">
+                    hellocmhjbckjsdbcmhzbm
+                </div>
+                <div *ngIf="poll.voted==false">
+                    <p>{{poll.text}}</p>
+                </div>
+            </div>
+        </div> -->
+</div>

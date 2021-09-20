@@ -89,6 +89,31 @@ export class ContentService
         return this.httpClient
         .get<any>(url);
       }
+
+
+      listPolls(studentId:any)
+      {
+        const url = "https://teamoutliers.herokuapp.com/api/list_poll?student_id="+studentId;
+        console.log(url);
+        return this.httpClient
+        .get<any>(url);
+      }
+
+      createPoll(_body:any)
+      {
+        const url = "https://teamoutliers.herokuapp.com/api/create_poll";
+        console.log(url);
+        return this.httpClient
+        .post<any>(url,_body);
+      }
+
+      voteForPoll(vote:any, pollId:any,studentId:any)
+      {
+        const url = "https://teamoutliers.herokuapp.com/api/vote?vote="+vote+"&student_id="+studentId+"&poll_id="+pollId;
+        console.log(url);
+        return this.httpClient
+        .get<any>(url);
+      }
  
 
 

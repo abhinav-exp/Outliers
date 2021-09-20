@@ -14,6 +14,7 @@ import { HttpClientModule } from '@angular/common/http';
 import { ProfileComponent } from './components/content-page/profile/profile.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { ToDoListComponent } from './components/content-page/to-do-list/to-do-list.component';
+import { PollsComponent } from './components/content-page/polls/polls.component';
 
 @NgModule({
   declarations: [
@@ -25,7 +26,8 @@ import { ToDoListComponent } from './components/content-page/to-do-list/to-do-li
     StudentListComponent,
     NoticeBoardComponent,
     ProfileComponent,
-    ToDoListComponent
+    ToDoListComponent,
+    PollsComponent
   ],
   imports: [
     BrowserModule,

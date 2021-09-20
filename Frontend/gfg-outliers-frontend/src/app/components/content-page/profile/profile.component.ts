@@ -90,6 +90,7 @@ export class ProfileComponent implements OnInit {
           this._contentService.updateProfile(_body).subscribe((resp)=>{
               this._loading = false;
               this._savedTag = true
+              this.getProfileById(this.authenticationService.activeId);
           },
           (err)=>
           {
