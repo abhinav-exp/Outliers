@@ -48,7 +48,7 @@ def liststudents(request):
 
 @api_view(['GET'])
 def listnotice(request):
-    notices = notice.objects.all()
+    notices = notice.objects.all().order_by('-id')
     res = []
     for n in notices:
         r = {
@@ -227,7 +227,7 @@ def list_poll(request):
     student_id = request.GET['student_id']
     s = students.objects.get(id = student_id)
     res = []
-    for o in poll_ques.objects.all():
+    for o in poll_ques.objects.all().order_by('-id'):
         obj = {
             'id':o.id,
             'text':o.text,
@@ -282,7 +282,7 @@ def vote(request):
 def get_tasks(request):
     student_id = request.GET['student_id']
     s = students.objects.get(id = student_id)
-    l = tasks.objects.filter(student = s).order_by('is_completed')
+    l = tasks.objects.filter(student = s).order_by('is_completed','-id')
     res = []
     for o in l:
         obj = {
