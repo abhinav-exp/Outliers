@@ -98,7 +98,8 @@ export class AppComponent implements OnInit {
                {
                     this.isAuthenticated = true;   
                     this.activeId = response.id;     
-                    this._authenticationService.activeId = this.activeId;      
+                    this._authenticationService.activeId = this.activeId;    
+                    this._authenticationService._isCR_Aunthenticated = false;  
                }
                else{
                   this.isAuthenticationFailed = true;
@@ -132,6 +133,7 @@ export class AppComponent implements OnInit {
                     this.isAuthenticated = true;   
                     this.activeId = response.id;   
                     this._authenticationService.activeId = this.activeId;        
+                    this._authenticationService._isCR_Aunthenticated = response.is_CR;
                }
                else{
                   this.isAuthenticationFailed = true;

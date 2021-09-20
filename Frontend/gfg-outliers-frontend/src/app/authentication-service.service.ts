@@ -24,11 +24,14 @@ export class AuthenticationService
 
       constructor(
         private httpClient: HttpClient,
-      ) { }
+      ) 
+      {
+          this._isCR_Aunthenticated = false;
+      }
 
       activeId:any;
 
-      
+      _isCR_Aunthenticated:boolean=false;
 
       authenticate_sign_up(_body:any)
       {
