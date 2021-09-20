@@ -34,14 +34,6 @@ export class ContentService
         .get<any>(url);
       }
 
-      getNoticeBoardList()
-      {
-        const url = "https://teamoutliers.herokuapp.com/api/listnotice";
-        console.log(url);
-        return this.httpClient
-        .get<any>(url);
-      }
-
       getProfileById(id:number)
       {
         const url = "https://teamoutliers.herokuapp.com/api/get_by_id/"+id;
@@ -110,6 +102,38 @@ export class ContentService
       voteForPoll(vote:any, pollId:any,studentId:any)
       {
         const url = "https://teamoutliers.herokuapp.com/api/vote?vote="+vote+"&student_id="+studentId+"&poll_id="+pollId;
+        console.log(url);
+        return this.httpClient
+        .get<any>(url);
+      }
+
+      getNoticeBoardList()
+      {
+        const url = "https://teamoutliers.herokuapp.com/api/listnotice";
+        console.log(url);
+        return this.httpClient
+        .get<any>(url);
+      }
+
+      createNotice(_body:any)
+      {
+        const url = "https://teamoutliers.herokuapp.com/api/create_notice";
+        console.log(url);
+        return this.httpClient
+        .post<any>(url,_body);
+      }
+
+      editNotice(_body:any)
+      {
+        const url = "https://teamoutliers.herokuapp.com/api/edit_notice";
+        console.log(url);
+        return this.httpClient
+        .post<any>(url,_body);
+      }
+
+      deleteNotice(noticeId:any)
+      {
+        const url = "https://teamoutliers.herokuapp.com/api/delete_notice?notice_id="+noticeId;
         console.log(url);
         return this.httpClient
         .get<any>(url);

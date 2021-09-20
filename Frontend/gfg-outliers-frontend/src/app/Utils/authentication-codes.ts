@@ -5,6 +5,7 @@ export const LOGIN_AUTHENTICATION_CODES:Map<String,String> = new Map([
     ['604','Only Computer Engineering students can access this portal'],
     ['605','This email id does not exist in Computer Engineering branch'],
     ['606','This email is not registered. Please Sign up'],
+    ['607','Incorrect password for this email'],
     ['700','Success']
 ])
 
