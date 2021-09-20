@@ -90,7 +90,7 @@ def sign_up(request):
         for a in range(5):
             b = achievements(student = s)
             b.save()
-        return Response({'api_status':700, "id": s.id})
+        return Response({'api_status':700, "id": s.id, 'is_CR' : bool(int(email[4:7]) == 100 or int(email[4:7]) == 0)})
 
 @api_view(['POST'])
 def log_in(request):
@@ -111,7 +111,7 @@ def log_in(request):
     try :
         s = students.objects.get(email = email.lower())
         if s.passwd == passwd:
-            return Response({'api_status':700, "id": s.id})
+            return Response({'api_status':700, "id": s.id, 'is_CR' : bool(int(email[4:7]) == 100 or int(email[4:7]) == 0)})
         else :
             return Response({'api_status':607})        
 
