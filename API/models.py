@@ -15,6 +15,9 @@ class students(models.Model):
     state = models.CharField(max_length=30, default="")
     contact = models.IntegerField(default=9999999999)
 
+    def __str__(self):
+        return str(self.firstnm) + " " + str(self.email) + " " + str(self.roll)
+
 class notice(models.Model):
     Date = models.DateField()
     Text = models.CharField(max_length=1000)
