@@ -12,8 +12,13 @@ export class PollsComponent implements OnInit {
   constructor(private _authService:AuthenticationService
              ,private _contentService:ContentService) { }
 
+  //Holds the list of polls           
   _polls:any;
+
+  //Ng Model for poll input text
   _createPollInput:any;
+
+  //Stores loading state 
   _isCreatePollLoading:boolean = false;
 
   ngOnInit(): void 
@@ -24,6 +29,7 @@ export class PollsComponent implements OnInit {
       this.loadPolls();
   }
 
+  //Populates the list of polls
   loadPolls()
   {
       this._contentService.listPolls(this._authService.activeId).subscribe((resp)=>{
@@ -31,6 +37,7 @@ export class PollsComponent implements OnInit {
       })
   }
 
+  //Vote for a particular poll
   voteForPoll(poll:any,vote:any)
   {
       console.log("vote= "+vote);
@@ -43,7 +50,7 @@ export class PollsComponent implements OnInit {
 
   _createPoll()
   {
-      console.log(this._createPollInput);
+      // If ng model meets any of these conditions then don't call the base service
       if(this._createPollInput==null || this._createPollInput==undefined || this._createPollInput.length==0)
       {
          return;

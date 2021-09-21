@@ -9,22 +9,36 @@ import { ContentService } from 'src/app/content-service.service';
 })
 export class NoticeBoardComponent implements OnInit {
 
+  //Maintains state of list page or single notice page
   isParticularNoticePicked: boolean = false;
+
+  //Stores the notice object when particular notice selected
   noticePicked:any;
 
+  //Contains the list of notice
   listOfNotice:any;
+
+  //Maintains the authentication of class representative 
   _isCR_authenticated:boolean = false;
+
+  //Maintains state of add/edit page 
   _isAddEditMode:boolean = false;
+
+  //maintains state of add/edit page title
   _addEditTitle:string = 'Edit Notice';
+
+  //stores notice object for add/edit page
   _activeNoticeForAddEdit:any;
+
+  //Stores if it is add mode or edit mode
   _activeState:number = 0;
+
+  //Ng Model for notice text
   _noticeModel:any = null;
   
-  constructor(private contentService:ContentService
-            ,private _authService:AuthenticationService) 
-  { 
-       
-  }
+  constructor(private contentService:ContentService                   //Content Setvice injected
+            ,private _authService:AuthenticationService              // Auth Service injected
+  ) { }
 
   ngOnInit(): void 
   {
@@ -34,6 +48,7 @@ export class NoticeBoardComponent implements OnInit {
     this.loadNotice();
   }
 
+  // Call for the list of notices
   loadNotice()
   {
       this.contentService.getNoticeBoardList().subscribe((resp)=>{
@@ -44,6 +59,7 @@ export class NoticeBoardComponent implements OnInit {
     });
   }
 
+  //changes state of noticePicked 
   noticeClicked(event:any)
   {
      console.log(event);
@@ -51,6 +67,7 @@ export class NoticeBoardComponent implements OnInit {
      this.noticePicked.push(event);
   }
 
+  //Toggles the edit notice page
   openEditNoticePage(notice:any)
   {
       this._isAddEditMode = true;
@@ -60,6 +77,7 @@ export class NoticeBoardComponent implements OnInit {
       this._activeState = 1;
   }
 
+  //Toggles the add notice page
   openAddNoticePage()
   {
       this._isAddEditMode = true;
@@ -68,6 +86,7 @@ export class NoticeBoardComponent implements OnInit {
       this._activeState = 2;
   }
 
+  //Saving and Posting after add/edit
   saveAndPost()
   {
        if(this._activeState==1)
@@ -79,6 +98,7 @@ export class NoticeBoardComponent implements OnInit {
        }
   }
 
+  //cancels adding or editing of notice
   backToListPage()
   {
     this.loadNotice();
@@ -87,6 +107,7 @@ export class NoticeBoardComponent implements OnInit {
 
   editNotice()
   {
+      // If ng model meets any condition then don't call the base service
       if(this._noticeModel==null || this._noticeModel==undefined || this._noticeModel.length==0 )
       {
           return;
@@ -96,7 +117,7 @@ export class NoticeBoardComponent implements OnInit {
         notice_id : this._activeNoticeForAddEdit.id,
         text : this._noticeModel
       }
-
+      //calling service method for edit notice
       this.contentService.editNotice(_body).subscribe((resp)=>{
           this.loadNotice();
           this._isAddEditMode = false;
@@ -105,6 +126,7 @@ export class NoticeBoardComponent implements OnInit {
 
   createNotice()
   {
+      // If ng model meets any condition then don't call the base service
       if(this._noticeModel==null || this._noticeModel==undefined || this._noticeModel.length==0 )
       {
           return;
@@ -114,7 +136,7 @@ export class NoticeBoardComponent implements OnInit {
         student_id : this._authService.activeId,
         text : this._noticeModel
       }
-
+      //calling service method for save notice
       this.contentService.createNotice(_body).subscribe((resp)=>{
           this.loadNotice();
           this._isAddEditMode = false;
@@ -123,6 +145,7 @@ export class NoticeBoardComponent implements OnInit {
 
   deleteNotice(noticeId:any)
   {
+      //calling service method for delete notice
        this.contentService.deleteNotice(noticeId).subscribe((resp)=>{
            this.loadNotice();
        })

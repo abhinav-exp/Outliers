@@ -1,13 +1,15 @@
 <div id="main-component">
-  <!--Login Component-->
+
+  <!----------------------------Authentication Component Starts -------------------------------------------------------->
   <div *ngIf="!isAuthenticated" style="display: flex;justify-content: center;align-items: center;margin-top: 2em;">
-    <!--Login Card-->
+
+    <!----------------------------------------Login Component Starts ------------------------------------------------------------->
     <div *ngIf="loginMode">
       <div class="container">
         <div class="screen">
           <div class="screen__content">
             <div id="loading-gif" *ngIf="isLoading">
-              <img src="assets/img/25.gif" alt="Loading"  />
+              <img src="assets/img/25.gif" alt="Loading" />
             </div>
             <div id='authentication-fail-label' *ngIf="isAuthenticationFailed">
               {{authentication_failed_label}}
@@ -16,26 +18,27 @@
               <div class="login__field">
                 <i class="login__icon fas fa-user"></i>
                 <input formControlName="_email" type="text" class="login__input" placeholder="Email">
-                  <div *ngIf="_loginForm.get('_email')?.hasError('required') && _login_ng_form.submitted"
-                    id="required">
-                    Required
-                  </div>
-                  <div *ngIf="_loginForm.get('_email')?.hasError('pattern') && !_loginForm.get('_email')?.hasError('required') && _login_ng_form.submitted"
+                <div *ngIf="_loginForm.get('_email')?.hasError('required') && _login_ng_form.submitted" id="required">
+                  Required
+                </div>
+                <div
+                  *ngIf="_loginForm.get('_email')?.hasError('pattern') && !_loginForm.get('_email')?.hasError('required') && _login_ng_form.submitted"
                   id="required">
-                      Invalid Email format
-                  </div>
+                  Invalid Email format
+                </div>
               </div>
               <div class="login__field">
                 <i class="login__icon fas fa-lock"></i>
                 <input formControlName="_password" type="password" class="login__input" placeholder="Password">
-                  <div *ngIf="_loginForm.get('_password')?.hasError('required') && _login_ng_form.submitted"
-                    id="required">
-                    Required
-                  </div>
-                  <div *ngIf="_loginForm.get('_password')?.hasError('minlength') && !_loginForm.get('_password')?.hasError('required') && _login_ng_form.submitted"
-                    id="required">
-                    Password must have atlest 4 characters
-                  </div>
+                <div *ngIf="_loginForm.get('_password')?.hasError('required') && _login_ng_form.submitted"
+                  id="required">
+                  Required
+                </div>
+                <div
+                  *ngIf="_loginForm.get('_password')?.hasError('minlength') && !_loginForm.get('_password')?.hasError('required') && _login_ng_form.submitted"
+                  id="required">
+                  Password must have atlest 4 characters
+                </div>
               </div>
               <button (click)="authenticateLogin($event)" class="button login__submit">
                 <span class="button__text">Log In Now</span>
@@ -53,13 +56,16 @@
         </div>
       </div>
     </div>
-    <!--Sign UP Card-->
+
+    <!----------------------------------------Login Component Ends ------------------------------------------------------------->
+
+    <!----------------------------------------Sign Up Component Starts ------------------------------------------------------------->
     <div *ngIf="signUpMode">
       <div class="container">
         <div class="screen">
           <div class="screen__content">
             <div id="loading-gif" *ngIf="isLoading">
-              <img src="assets/img/25.gif" alt="Loading"  />
+              <img src="assets/img/25.gif" alt="Loading" />
             </div>
             <div id='authentication-fail-label' *ngIf="isAuthenticationFailed">
               {{authentication_failed_label}}
@@ -83,12 +89,13 @@
                     id="required">
                     Required
                   </div>
-                  <div *ngIf="_signupForm.get('_email')?.hasError('pattern') && !_signupForm.get('_email')?.hasError('required') && _signup_ng_form.submitted"
-                  id="required">
-                      Invalid Email format
+                  <div
+                    *ngIf="_signupForm.get('_email')?.hasError('pattern') && !_signupForm.get('_email')?.hasError('required') && _signup_ng_form.submitted"
+                    id="required">
+                    Invalid Email format
                   </div>
                 </div>
-                
+
                 <button (click)="authenticateSignUp($event)" class="button login__submit">
                   <span class="button__text">Sign Up Now</span>
                   <i class="button__icon fas fa-chevron-right"></i>
@@ -114,7 +121,8 @@
                     id="required">
                     Required
                   </div>
-                  <div *ngIf="_signupForm.get('_password')?.hasError('minlength') && !_signupForm.get('_password')?.hasError('required') && _signup_ng_form.submitted"
+                  <div
+                    *ngIf="_signupForm.get('_password')?.hasError('minlength') && !_signupForm.get('_password')?.hasError('required') && _signup_ng_form.submitted"
                     id="required">
                     Password must have atlest 4 characters
                   </div>
@@ -133,19 +141,30 @@
       </div>
     </div>
   </div>
+  <!----------------------------------------Sign Up Component Ends ------------------------------------------------------------->
+  <!----------------------------Authentication Component Ends -------------------------------------------------------->
+
+
+  <!--------------------------------------- Success Authenticated -------------------------------->
   <div *ngIf="isAuthenticated">
+    <!--Header starts-->
     <div class="header-container">
       <app-header></app-header>
     </div>
+    <!--Header ends-->
     <div class="body-container">
 
+      <!--Navbar starts-->
       <div id="navbar">
         <app-navbar></app-navbar>
       </div>
+      <!--Navbar ends-->
 
+      <!--Main component starts-->
       <div id="main-content">
         <app-main-content></app-main-content>
       </div>
+      <!--Main component ends-->
 
     </div>
     <footer>

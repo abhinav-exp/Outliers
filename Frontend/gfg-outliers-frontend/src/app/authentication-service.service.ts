@@ -1,3 +1,8 @@
+/**
+ * This Service deals with Authentication
+ * 
+ * Login/SignUp
+ */
 import {
     HttpClient,
     HttpErrorResponse,
@@ -22,6 +27,11 @@ export class AuthenticationService
     
       headerss = this.setheaders();
 
+      /** This variable maintains the student Id of current logged in student */
+      activeId:any;
+      /** This variable maintains the state of current student being Class Representative or not */
+      _isCR_Aunthenticated:boolean=false;
+
       constructor(
         private httpClient: HttpClient,
       ) 
@@ -29,10 +39,11 @@ export class AuthenticationService
           this._isCR_Aunthenticated = false;
       }
 
-      activeId:any;
-
-      _isCR_Aunthenticated:boolean=false;
-
+      /**
+       * This method takes cretendials in form of an object
+       * 
+       * It returns the result as an observable
+       */
       authenticate_sign_up(_body:any)
       {
         const url = "https://teamoutliers.herokuapp.com/api/sign_up";
@@ -41,6 +52,11 @@ export class AuthenticationService
         .post<any>(url,_body);
       }
 
+      /**
+       * This method takes cretendials in form of an object
+       * 
+       * It returns the result as an observable
+       */
       authenticate_log_in(_body:any)
       {
         const url = "https://teamoutliers.herokuapp.com/api/log_in";
