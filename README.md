@@ -96,10 +96,33 @@ Each student can view the list of students in their branch and can view the basi
 
 <hr />
 
-## Hosting 
+# Backend 
+
+### API 
+
+All the api are coded in this folder
+
+<hr />
+
+### Hosting App
+
+It hosts and redirects all the urls to frontend build files 
+
+<hr />
+
+### Outliers Folder
+
+Contains all the configration files for backend
+
+<hr />
+
+### Hosting 
+
 The website is hosted at https://teamoutliers.herokuapp.com/
 
-## Instruction to run on local machine
+<hr />
+
+### Instruction to run on local machine
 ```
 git clone https://github.com/abhinav-exp/Outliers.git
 ```
@@ -112,7 +135,19 @@ after cloning
 ```
 cd Outliers 
 python3 -m venv venv 
+```
+
+activate the virtual environment 
+```
 source venv/bin/activate
+``` 
+or 
+```
+venv\Scripts\activate
+```
+
+install and run server
+```
 pip install -r requirements.txt
 python3 manage.py runserver
 ```

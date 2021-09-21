@@ -9,8 +9,78 @@ from datetime import date
 
 
 # Create your views here.
+
+# TO TEST IF HOSTING IS WORKING OR NOT
+
 def req(request):
     return HttpResponse("hello api")
+
+# ------------------------------------------ 
+# SECTION - STUDENTS (AUTHENTIFICATION)
+# ------------------------------------------ 
+
+# CREATES NEW STUDENTS 
+
+@api_view(['POST'])
+def sign_up(request):
+    Firstnm = request.data['first']
+    Lastnm = request.data['last']
+    email = request.data['email'].lower()
+    passwd = request.data['password']
+
+    if not (email[-14:] == '@iiit-bh.ac.in' and len(email) == 21):
+        return Response({'api_status' : 601})
+    if not email[2:4] == '19':
+        return Response({'api_status':602})
+    if not email[0].lower() == 'b':
+        return Response({'api_status':603})
+    if not email[1].lower() == '5':
+        return Response({'api_status':604})
+    if int(email[4:7]) > 100:
+        return Response({'api_status':605})
+    
+    try :
+        s = students.objects.get(email = email.lower())
+        return Response({'api_status':606})
+    
+    except students.DoesNotExist :
+        s = students(firstnm = Firstnm, lastnm = Lastnm, email = email.lower(),
+            roll = email[:7], passwd = passwd, cgpa = 7)
+        s.save()
+        for a in range(5):
+            b = achievements(student = s)
+            b.save()
+        return Response({'api_status':700, "id": s.id, 'is_CR' : bool(int(email[4:7]) == 100 or int(email[4:7]) == 0)})
+
+# VERIFY ALREADY SIGNED UP STUDENTS 
+
+@api_view(['POST'])
+def log_in(request):
+    email = request.data['email'].lower()
+    passwd = request.data['password']
+
+    if not (email[-14:] == '@iiit-bh.ac.in' and len(email) == 21):
+        return Response({'api_status' : 601})
+    if not email[2:4] == '19':
+        return Response({'api_status':602})
+    if not email[0].lower() == 'b':
+        return Response({'api_status':603})
+    if not email[1].lower() == '5':
+        return Response({'api_status':604})
+    if int(email[4:7]) > 100:
+        return Response({'api_status':605})
+    
+    try :
+        s = students.objects.get(email = email.lower())
+        if s.passwd == passwd:
+            return Response({'api_status':700, "id": s.id, 'is_CR' : bool(int(email[4:7]) == 100 or int(email[4:7]) == 0)})
+        else :
+            return Response({'api_status':607})        
+
+    except students.DoesNotExist :
+        return Response({'api_status':606})
+
+# THIS VIEW LIST ALL THE STUDENTS IN DATABASE
 
 @api_view(['GET'])
 def liststudents(request):
@@ -46,79 +116,10 @@ def liststudents(request):
     #print(res)
     return Response(res)
 
-@api_view(['GET'])
-def listnotice(request):
-    notices = notice.objects.all().order_by('-id')
-    res = []
-    for n in notices:
-        r = {
-            'id' : n.id,
-            'date' : str(n.Date),
-            'text' : n.Text,
-            'posted_by' : str(n.Posted_by.firstnm) + " " + str(n.Posted_by.lastnm)
-        }
-        res.append(r)
-    #print(res)
-    return Response(res)
-
-@api_view(['POST'])
-def sign_up(request):
-    Firstnm = request.data['first']
-    Lastnm = request.data['last']
-    email = request.data['email'].lower()
-    passwd = request.data['password']
-
-    if not (email[-14:] == '@iiit-bh.ac.in' and len(email) == 21):
-        return Response({'api_status' : 601})
-    if not email[2:4] == '19':
-        return Response({'api_status':602})
-    if not email[0].lower() == 'b':
-        return Response({'api_status':603})
-    if not email[1].lower() == '5':
-        return Response({'api_status':604})
-    if int(email[4:7]) > 100:
-        return Response({'api_status':605})
-    
-    try :
-        s = students.objects.get(email = email.lower())
-        return Response({'api_status':606})
-    
-    except students.DoesNotExist :
-        s = students(firstnm = Firstnm, lastnm = Lastnm, email = email.lower(),
-            roll = email[:7], passwd = passwd, cgpa = 0)
-        s.save()
-        for a in range(5):
-            b = achievements(student = s)
-            b.save()
-        return Response({'api_status':700, "id": s.id, 'is_CR' : bool(int(email[4:7]) == 100 or int(email[4:7]) == 0)})
-
-@api_view(['POST'])
-def log_in(request):
-    email = request.data['email'].lower()
-    passwd = request.data['password']
-
-    if not (email[-14:] == '@iiit-bh.ac.in' and len(email) == 21):
-        return Response({'api_status' : 601})
-    if not email[2:4] == '19':
-        return Response({'api_status':602})
-    if not email[0].lower() == 'b':
-        return Response({'api_status':603})
-    if not email[1].lower() == '5':
-        return Response({'api_status':604})
-    if int(email[4:7]) > 100:
-        return Response({'api_status':605})
-    
-    try :
-        s = students.objects.get(email = email.lower())
-        if s.passwd == passwd:
-            return Response({'api_status':700, "id": s.id, 'is_CR' : bool(int(email[4:7]) == 100 or int(email[4:7]) == 0)})
-        else :
-            return Response({'api_status':607})        
-
-    except students.DoesNotExist :
-        return Response({'api_status':606})
 
 import json
+
+# EDITS STUDENT DETAILS 
 
 @api_view(['POST'])
 def editstudent(request):
@@ -155,6 +156,8 @@ def editstudent(request):
         'api_status' : 700
     })
 
+# GETS STUDENT DETAILS BY ROLL NO
+
 @api_view(['GET'])
 def get_by_roll(request):
     roll = request.GET['roll'].lower()
@@ -175,6 +178,8 @@ def get_by_roll(request):
             obj['arch'].append(arc.text)
     
     return Response(obj)
+
+# GETS STUDENT DETAILS BY ID (DATABASE ID)
 
 @api_view(['GET'])
 def get_by_id(request, id):
@@ -198,6 +203,12 @@ def get_by_id(request, id):
     
     return Response(obj)
 
+# ------------------------------------------ 
+# SECTION - POLLS
+# ------------------------------------------ 
+
+# CREATES NEW POLLS BY TAKING QUESTIONS AS INPUT
+
 @api_view(['POST'])
 def create_poll(request):
     text = request.data['text']
@@ -207,6 +218,8 @@ def create_poll(request):
     obj.save()
     
     return Response({'api_status':700, 'ques_id':obj.id})
+
+# LISTS ALL THE POLLS 
 
 @api_view(['GET'])
 def view_poll(request):
@@ -221,6 +234,8 @@ def view_poll(request):
         }
         res.append(obj)
     return Response(res)
+
+# LIST ALL THE POLLS WITH STUDENT SPECIFIC DETAILS (LIKE - STUDENT HAS VOTED OR NOT) 
 
 @api_view(['GET'])
 def list_poll(request):
@@ -245,6 +260,9 @@ def list_poll(request):
         res.append(obj)
     return Response(res)
 
+# CHECKS IF THE STUDENT HAS ALREADY VOTED OR NOT 
+# IF VOTED THEN VOTED WHAT
+
 @api_view(['GET'])
 def check_vote(request):
     student_id = request.GET['student_id']
@@ -260,6 +278,8 @@ def check_vote(request):
         return Response({
             'voted' : False
         })
+
+# VOTES FOR STUDENT
 
 @api_view(['GET'])
 def vote(request):
@@ -277,6 +297,11 @@ def vote(request):
         v.save()
         return Response({'api_status':700})
 
+# ------------------------------------------ 
+# SECTION - TASKS(TO DO)
+# ------------------------------------------ 
+
+# GETS LIST OF ALL THE TASKS FOR PARTICULAR STUDENT
 
 @api_view(['GET'])
 def get_tasks(request):
@@ -294,6 +319,8 @@ def get_tasks(request):
         res.append(obj)
     return Response(res)
 
+# CREATE NEW TASKS FOR STUDENT
+
 @api_view(['POST'])
 def create_tasks(request):
     student_id = request.data['student_id']
@@ -305,6 +332,8 @@ def create_tasks(request):
     obj.save()
     return Response({'api_status':700, 'task_id':obj.id})
 
+# TURN TASKS INTO COMPLETED TASKS 
+
 @api_view(['GET'])
 def complete_task(request):
     task_id = request.GET['task_id']
@@ -313,11 +342,36 @@ def complete_task(request):
     t.save()
     return Response({'api_status':700, 'task_id':t.id})
 
+# DELETE TASKS 
+
 @api_view(['GET'])
 def delete_task(request):
     task_id = request.GET['task_id']
     tasks.objects.filter(id = task_id).delete()
     return Response({'api_status':700})
+
+# ------------------------------------------ 
+# SECTION - NOTICE 
+# ------------------------------------------ 
+
+# LISTS ALL THE NOTICES IN DATABASE
+
+@api_view(['GET'])
+def listnotice(request):
+    notices = notice.objects.all().order_by('-id')
+    res = []
+    for n in notices:
+        r = {
+            'id' : n.id,
+            'date' : str(n.Date),
+            'text' : n.Text,
+            'posted_by' : str(n.Posted_by.firstnm) + " " + str(n.Posted_by.lastnm)
+        }
+        res.append(r)
+    #print(res)
+    return Response(res)
+
+# CREATES NEW NOTICES 
 
 @api_view(['POST'])
 def create_notice(request):
@@ -330,11 +384,15 @@ def create_notice(request):
         'id':notic.id
     })
 
+# DELETES NOTICE
+
 @api_view(['GET'])
 def delete_notice(request):
     notice_id = request.GET['notice_id']
     notice.objects.filter(id = notice_id).delete()
     return Response({'api_status':700})
+
+# EDITS NOTICE
 
 @api_view(['POST'])
 def edit_notice(request):

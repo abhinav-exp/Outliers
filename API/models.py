@@ -16,7 +16,7 @@ class students(models.Model):
     contact = models.IntegerField(default=9999999999)
 
     def __str__(self):
-        return str(self.firstnm) + " " + str(self.email) + " " + str(self.roll)
+        return str(self.firstnm) + " " + str(self.email) + " " + str(self.roll)+" "+str(self.cgpa)
 
 class notice(models.Model):
     Date = models.DateField()
