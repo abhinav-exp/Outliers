@@ -8,6 +8,7 @@ import { StudentListComponent } from './components/content-page/student-list/stu
 import { TimetableComponent } from './components/content-page/timetable/timetable.component';
 import { ToDoListComponent } from './components/content-page/to-do-list/to-do-list.component';
 
+//Routes for the components
 const routes: Routes = [
   {path:"polls",component:PollsComponent},
   {path:"todo",component:ToDoListComponent},

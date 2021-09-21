@@ -10,6 +10,7 @@ import { ContentService } from 'src/app/content-service.service';
 })
 export class ProfileComponent implements OnInit {
 
+  // Reactive form for profile data
   profileFormData: FormGroup = this._fb.group({
     firstName: ['',[Validators.required]],
     lastName: ['',[Validators.required]],
@@ -24,8 +25,13 @@ export class ProfileComponent implements OnInit {
     achievement5: ''
   });
 
+  // Holding profile datails
   _currentProfile: any;
+
+  // stores saved state during and after api call
   _savedTag:boolean = false;
+
+  // stores the loading state
   _loading:boolean = false;
 
   constructor(private _fb: FormBuilder
@@ -40,10 +46,13 @@ export class ProfileComponent implements OnInit {
     this.getProfileById(this.authenticationService.activeId);
   }
 
+  //Getting profile details by calling base service
   getProfileById(activeId: any) {
     this._loading = true;
     this._contentService.getProfileById(activeId).subscribe((response) => {
       this._currentProfile = response;
+      
+      //populating the form with current profile details
       this.profileFormData.setValue({
         firstName: response.first,
         lastName: response.last,
@@ -63,7 +72,7 @@ export class ProfileComponent implements OnInit {
 
   saveProfile(event:any)
   {
-      console.log(this.profileFormData.value);
+      //Calls base service only if form is valid
       if(this.profileFormData.valid)
       {
           let _achievements = [];
@@ -84,7 +93,6 @@ export class ProfileComponent implements OnInit {
               contact : Number(this.profileFormData.value.phoneNumber),
               arch : _achievements
           }  
-          console.log(_body);  
           this._loading = true;
           this._savedTag = false;
           this._contentService.updateProfile(_body).subscribe((resp)=>{
