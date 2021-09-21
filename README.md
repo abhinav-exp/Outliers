@@ -1,5 +1,7 @@
 # Outliers
 
+A Customised Student Portal WebApp for Our branch students where only they can login and conduct class polls, have a todo list, share their achievements with others, view notices posted by CR and much more. This WebApp is build as a contest project by team Outliers at GeeksFiesta of GFG IIIT-BH Chapter.
+
 # Frontend
 The frontend of the project has been developed using Angular 8 framework. The technologies used in building the frontend are:
 <ol>
